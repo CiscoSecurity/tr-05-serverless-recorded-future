@@ -1,8 +1,8 @@
-
 from flask import Blueprint
 from functools import partial
-from api.utils import get_json, get_jwt, jsonify_data
+
 from api.schemas import ObservableSchema, ActionFormParamsSchema
+from api.utils import get_json, get_jwt, jsonify_data
 
 respond_api = Blueprint('respond', __name__)
 
