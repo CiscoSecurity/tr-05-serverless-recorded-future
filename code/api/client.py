@@ -14,12 +14,10 @@ class RecordedFutureClient:
         self.fields = current_app.config['RECORDED_FUTURE_SEARCH_FIELDS']
 
     @catch_ssl_errors
-    def _request(self, observable_type, value, method='GET',
-                 params=None, headers=None):
+    def _request(self, observable_type, value, params=None, headers=None):
         url = '/'.join([self.base_url, observable_type, value])
 
-        response = requests.request(method, url,
-                                    params=params, headers=headers)
+        response = requests.get(url, params=params, headers=headers)
         return response
 
     def make_observe(self, observable):
@@ -29,4 +27,4 @@ class RecordedFutureClient:
         }
         result = self._request(observable['type'], observable['value'],
                                params=params, headers=self.headers)
-        return result
+        return result.json()

@@ -4,11 +4,15 @@ import jwt
 from jwt import InvalidSignatureError, DecodeError, InvalidAudienceError
 import requests
 from requests.exceptions import ConnectionError, InvalidURL, SSLError
+from uuid import uuid4
 
-from flask import request, jsonify
+from flask import request, jsonify, g
 
-from api.errors import AuthorizationError, InvalidArgumentError
-from api.errors import RecordedFutureSSLError
+from api.errors import (
+    AuthorizationError,
+    InvalidArgumentError,
+    RecordedFutureSSLError
+)
 
 NO_AUTH_HEADER = 'Authorization header is missing'
 WRONG_AUTH_TYPE = 'Wrong authorization type'
@@ -131,3 +135,27 @@ def catch_ssl_errors(func):
         except SSLError as error:
             raise RecordedFutureSSLError(error)
     return wraps
+
+
+def transient_id(entity_type, uuid=None):
+    if uuid:
+        return f'transient:{entity_type}-{uuid}'
+    return f'transient:{entity_type}-{uuid4()}'
+
+
+def format_docs(docs):
+    return {'count': len(docs), 'docs': docs}
+
+
+def jsonify_result():
+    result = {'data': {}}
+
+    if g.get('indicators'):
+        result['data']['indicators'] = format_docs(g.indicators)
+
+    if g.get('errors'):
+        result['errors'] = g.errors
+        if not result['data']:
+            del result['data']
+
+    return jsonify(result)

@@ -1,8 +1,11 @@
-from flask import Blueprint
 from functools import partial
 
+from flask import Blueprint, g
+
+from api.client import RecordedFutureClient
+from api.mapping import Mapping
 from api.schemas import ObservableSchema
-from api.utils import get_json, get_jwt, jsonify_data
+from api.utils import get_json, get_jwt, jsonify_data, jsonify_result
 
 enrich_api = Blueprint('enrich', __name__)
 
@@ -18,9 +21,23 @@ def deliberate_observables():
 
 @enrich_api.route('/observe/observables', methods=['POST'])
 def observe_observables():
-    _ = get_jwt()
-    _ = get_observables()
-    return jsonify_data({})
+    api_key = get_jwt()
+    observables = get_observables()
+
+    g.indicators = []
+
+    client = RecordedFutureClient(api_key)
+
+    for observable in observables:
+        mapping = Mapping(observable)
+        result = client.make_observe(observable)
+        rules = result['data']['risk'].get('evidenceDetails')
+        if rules:
+            for rule in rules:
+                indicator = mapping.extract_indicator(result, rule)
+                g.indicators.append(indicator)
+
+    return jsonify_result()
 
 
 @enrich_api.route('/refer/observables', methods=['POST'])
