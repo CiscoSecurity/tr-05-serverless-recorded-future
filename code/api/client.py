@@ -1,7 +1,10 @@
+from http import HTTPStatus
+
 import requests
 
 from flask import current_app
 
+from api.errors import ObservableNotFoundError
 from api.utils import catch_ssl_errors
 
 
@@ -18,7 +21,11 @@ class RecordedFutureClient:
         url = '/'.join([self.base_url, observable_type, value])
 
         response = requests.get(url, params=params, headers=headers)
-        return response
+        if response.ok:
+            return response.json()
+        else:
+            if response.status_code == HTTPStatus.NOT_FOUND:
+                raise ObservableNotFoundError()
 
     def make_observe(self, observable):
         params = {
@@ -27,4 +34,4 @@ class RecordedFutureClient:
         }
         result = self._request(observable['type'], observable['value'],
                                params=params, headers=self.headers)
-        return result.json()
+        return result
