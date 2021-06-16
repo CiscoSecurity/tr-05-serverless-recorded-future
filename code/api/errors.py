@@ -1,6 +1,7 @@
 AUTH_ERROR = 'authorization error'
 INVALID_ARGUMENT = 'invalid argument'
 UNKNOWN = 'unknown'
+OBSERVABLE_NOT_FOUND = 'There are no data for the observable'
 
 
 class TRFormattedError(Exception):
@@ -50,4 +51,12 @@ class RecordedFutureSSLError(TRFormattedError):
         super().init(
             UNKNOWN,
             f'Unable to verify SSL certificate: {message}'
+        )
+
+
+class ObservableNotFoundError(TRFormattedError):
+    def __init__(self):
+        super().__init__(
+            UNKNOWN,
+            OBSERVABLE_NOT_FOUND
         )

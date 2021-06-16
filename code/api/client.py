@@ -1,7 +1,10 @@
+from http import HTTPStatus
+
 import requests
 
 from flask import current_app
 
+from api.errors import ObservableNotFoundError
 from api.utils import catch_ssl_errors
 
 
@@ -14,13 +17,15 @@ class RecordedFutureClient:
         self.fields = current_app.config['RECORDED_FUTURE_SEARCH_FIELDS']
 
     @catch_ssl_errors
-    def _request(self, observable_type, value, method='GET',
-                 params=None, headers=None):
+    def _request(self, observable_type, value, params=None, headers=None):
         url = '/'.join([self.base_url, observable_type, value])
 
-        response = requests.request(method, url,
-                                    params=params, headers=headers)
-        return response
+        response = requests.get(url, params=params, headers=headers)
+        if response.ok:
+            return response.json()
+        else:
+            if response.status_code == HTTPStatus.NOT_FOUND:
+                raise ObservableNotFoundError()
 
     def make_observe(self, observable):
         params = {
