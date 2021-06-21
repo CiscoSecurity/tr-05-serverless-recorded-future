@@ -1,10 +1,11 @@
-import jwt
-
-from app import app
-from pytest import fixture
 from http import HTTPStatus
 from unittest.mock import MagicMock
+
+from pytest import fixture
+import jwt
+
 from api.errors import INVALID_ARGUMENT
+from app import app
 from tests.unit.payloads_for_tests import PRIVATE_KEY
 
 
@@ -69,3 +70,98 @@ def mock_api_response(status_code=HTTPStatus.OK, payload=None):
     mock_response.json = lambda: payload
 
     return mock_response
+
+
+def indicator_base_payload():
+    return {
+        "data": {
+            "indicators": {
+                "count": 2,
+                "docs": [
+                    {
+                        "confidence": "High",
+                        "description": "2 sightings on 1 source: Insikt Group."
+                                       " 2 reports including Partial List of D"
+                                       "ecoded Domains Linked to SUNBURST C2 C"
+                                       "ommunications. Most recent link (Dec 2"
+                                       "2, 2020): https://app.recordedfuture.c"
+                                       "om/live/sc/52qYMuHmYqU1",
+                        "id": "transient:indicator-ca332260-0585-4e36-a2dd-5f3"
+                              "483d67226",
+                        "producer": "Recorded Future",
+                        "schema_version": "1.1.6",
+                        "severity": 1,
+                        "short_description": "Historically Referenced by Insik"
+                                             "t Group",
+                        "source": "Recorded Future Intelligence Card",
+                        "source_uri": "https://app.recordedfuture.com/live/sc/"
+                                      "entity/idn%3Acisco.com",
+                        "timestamp": "2021-06-21T07:18:08Z",
+                        "title": "Historically Referenced by Insikt Group",
+                        "type": "indicator",
+                        "valid_time": {
+                            "end_time": "2525-01-01T00:00:00Z",
+                            "start_time": "2009-05-26T12:15:30.000Z"
+                        }
+                    },
+                    {
+                        "confidence": "High",
+                        "description": "1 sighting on 1 source: Recorded Futur"
+                                       "e Analyst Community Trending Indicator"
+                                       "s. Recently viewed by many analysts in"
+                                       " many organizations in the Recorded Fu"
+                                       "ture community.",
+                        "id": "transient:indicator-883b44a8-b131-41aa-a7d6-005"
+                              "b1f1adb8d",
+                        "producer": "Recorded Future",
+                        "schema_version": "1.1.6",
+                        "severity": 1,
+                        "short_description": "Trending in Recorded Future Anal"
+                                             "yst Community",
+                        "source": "Recorded Future Intelligence Card",
+                        "source_uri": "https://app.recordedfuture.com/live/sc/"
+                                      "entity/idn%3Acisco.com",
+                        "timestamp": "2021-06-21T07:18:08Z",
+                        "title": "Trending in Recorded Future Analyst "
+                                 "Community",
+                        "type": "indicator",
+                        "valid_time": {
+                            "end_time": "2525-01-01T00:00:00Z",
+                            "start_time": "2009-05-26T12:15:30.000Z"
+                        }
+                    }
+                ]
+            }
+        }
+    }
+
+
+@fixture(scope='module')
+def ssl_error_expected_relay_response():
+    return {
+        'errors':
+            [
+                {
+                    'code': 'unknown',
+                    'message':
+                        'Unable to verify SSL certificate: '
+                        'self signed certificate',
+                    'type': 'fatal'
+                }
+            ]
+    }
+
+
+@fixture
+def mock_exception_for_ssl_error():
+    mock_response = MagicMock()
+    mock_response.reason.args.__getitem__().verify_message = 'self signed' \
+                                                             ' certificate'
+    return mock_response
+
+
+def mock_valid_time():
+    return {
+        'end_time': '2525-01-01T00:00:00Z',
+        'start_time': '2009-05-26T12:15:30.000Z'
+    }

@@ -28,14 +28,13 @@ class Mapping:
     def time_format(time):
         return f'{time.isoformat(timespec="seconds")}Z'
 
-    @staticmethod
-    def _valid_time(lookup):
+    def _valid_time(self, lookup):
         start_time = lookup['data']['timestamps']['firstSeen']
         end_time = datetime(2525, 1, 1)
 
         return {
             'start_time': start_time,
-            'end_time': end_time
+            'end_time': self.time_format(end_time)
         }
 
     def extract_indicator(self, lookup, rule):
