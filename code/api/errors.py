@@ -48,7 +48,7 @@ class RecordedFutureSSLError(TRFormattedError):
             error.args[0].reason.args[0], 'verify_message', ''
         ) or error.args[0].reason.args[0].args[0]
 
-        super().init(
+        super().__init__(
             UNKNOWN,
             f'Unable to verify SSL certificate: {message}'
         )

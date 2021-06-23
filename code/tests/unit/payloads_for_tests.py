@@ -101,3 +101,134 @@ nKyI8B5gw4C0G0iL1dSsz2bR1O4GNOVfT3R6joZEXATFo/Kc2L0YAvApBNUYvY0k
 bjJ/JfTO5060SsWftf4iw3jrhSn9RwTTYdq/kErGFWvDGJn2MiuhMe2onNfVzIGR
 mdUxHwi1ulkspAn/fmY7f0hZpskDwcHyZmbKZuk+NU/FJ8IAcmvk9y7m25nSSc8=
 -----END RSA PRIVATE KEY-----"""
+
+EXPECTED_RESPONSE_FROM_RECORDED_FUTURE = {
+    "data": {
+        "timestamps": {
+            "lastSeen": "2021-06-21T07:26:43.277Z",
+            "firstSeen": "2009-05-26T12:15:30.000Z"
+        },
+        "risk": {
+            "criticalityLabel": "Unusual",
+            "riskString": "2/44",
+            "rules": 2,
+            "criticality": 1,
+            "riskSummary": "2 of 44 Risk Rules currently observed.",
+            "score": 10,
+            "evidenceDetails": [
+                {
+                    "mitigationString": "",
+                    "evidenceString": "2 sightings on 1 source: Insikt Group."
+                                      " 2 reports including Partial List of D"
+                                      "ecoded Domains Linked to SUNBURST C2 C"
+                                      "ommunications. Most recent link (Dec 22"
+                                      ", 2020): https://app.recordedfuture.com"
+                                      "/live/sc/52qYMuHmYqU1",
+                    "rule": "Historically Referenced by Insikt Group",
+                    "criticality": 1,
+                    "timestamp": "2020-12-22T00:00:00.000Z",
+                    "criticalityLabel": "Unusual"
+                },
+                {
+                    "mitigationString": "",
+                    "evidenceString": "1 sighting on 1 source: Recorded Future"
+                                      " Analyst Community Trending Indicators."
+                                      " Recently viewed by many analysts in ma"
+                                      "ny organizations in the Recorded Future"
+                                      " community.",
+                    "rule": "Trending in Recorded Future Analyst Community",
+                    "criticality": 1,
+                    "timestamp": "2021-06-21T07:33:00.061Z",
+                    "criticalityLabel": "Unusual"
+                }
+            ]
+        },
+        "intelCard": "https://app.recordedfuture.com/live/sc/entity/idn%3A"
+                     "cisco.com",
+        "sightings": [
+            {
+                "source": "Fast Company",
+                "url": "http://feedproxy.google.com/~r/fastcompany/headlines"
+                       "/~3/2lG8pHrMDbA/1279087",
+                "published": "2009-05-26T13:00:23.000Z",
+                "fragment": "\"Market transition\" may be a charming euphemism"
+                            " for meltdown, but Cisco's real transition has "
+                            "been to use technology to connect with prospects,"
+                            " turbocharging Cisco.com from an expert resource "
+                            "for about 15 million visitors a month into a lead"
+                            "-generation engine of real power.",
+                "title": "How Big Business Weathers the Economic Storm",
+                "type": "first"
+            },
+            {
+                "source": "GitHub",
+                "url": "https://github.com/TheXPerienceProject/android_kernel_"
+                       "xiaomi_vayu/blob/master/Documentation/translations/"
+                       "zh_CN/HOWTO",
+                "published": "2021-06-21T07:04:30.000Z",
+                "fragment": "HOWTO , Roland Dreier <rolandd@cisco.com> git."
+                            "kernel.org:/pub/scm/linux/kernel/git/roland/"
+                            "infiniband.git",
+                "title": "HOWTO",
+                "type": "mostRecent"
+            },
+            {
+                "source": "Russian Market",
+                "url": "http://Russian%20Market%20(Obfuscated)/logs?stealer=&s"
+                       "ystem=&country=&state=&city=&zip=&page=235&perpage=50&"
+                       "isp=&outlook=&links=&withcookies=0&pricesort=&priceran"
+                       "ge=0;10&vendor=#ebad6be806b2d911351bc34793d9ae7e",
+                "published": "2021-06-16T21:55:56.166Z",
+                "fragment": "| signin.ebay.es | dvdbarato.net | twikiteros.com"
+                            " | intercambiosvirtuales.org | subtel.es | world-"
+                            "driver.com | x-caleta.com | cablematic.com | pord"
+                            "escargadirecta.com | 192.168.68.1 | microcubo.com"
+                            " | octilus.com | ftworld.com | es.eetgroup.com | "
+                            "esprinet.com | miui.es | foro.el-hacker.com | fre"
+                            "ecovers.net | gsmspain.com | bankoanet.com | m.fa"
+                            "cebook.com | secure.avangate.com | e-nuc.com | sy"
+                            "nc.xmarks.com | ver.movistarplus.es | captchatrad"
+                            "er.com | webmail.tekno2000.com | sitioseguro.movi"
+                            "starplus.es | sicv3.chs.com.es | esprinet.com | u"
+                            "niversodivx.net | hackingxtreme.net | my.kaspersk"
+                            "y.com | juegos.loteriasyapuestas.es | globomatik."
+                            "com | cerberusapp.com | mail.internationalcombust"
+                            "ion.in | freecovers.net | gratisprogramas.bligoo."
+                            "com | universodivx.net | 2.139.110.34 | 4shared.c"
+                            "om | gratispeliculas.org | 192.168.1.1 | juegos.l"
+                            "oteriasyapuestas.es | es.ingrammicro.com | e-nuc."
+                            "com | 192.168.1.1 | vinzeo.com | peliculaswarez.c"
+                            "om | paypal.com | uploading.com | universodivx.ne"
+                            "t | bdpcenter.com | ",
+                "title": "Russian Market",
+                "type": "recentDarkWeb"
+            },
+            {
+                "source": "GitHub",
+                "url": "https://github.com/TheXPerienceProject/android_kernel_"
+                       "xiaomi_vayu/blob/master/Documentation/translations/zh_"
+                       "CN/HOWTO",
+                "published": "2021-06-21T07:04:30.000Z",
+                "fragment": "HOWTO , Roland Dreier <rolandd@cisco.com> git.ker"
+                            "nel.org:/pub/scm/linux/kernel/git/roland/infiniba"
+                            "nd.git",
+                "title": "HOWTO",
+                "type": "recentInfoSec"
+            },
+            {
+                "source": "PasteBin",
+                "url": "https://pastebin.com/s9dGSuMH",
+                "published": "2021-06-16T10:07:26.000Z",
+                "fragment": "*.cisco.com, *.webex.com, localhost, 127.0.0.0/8,"
+                            " ::1, 10.",
+                "title": "Untitled Paste from Pastebin",
+                "type": "recentPaste"
+            }
+        ],
+        "entity": {
+            "id": "idn:cisco.com",
+            "name": "cisco.com",
+            "type": "InternetDomainName"
+        }
+    }
+}
