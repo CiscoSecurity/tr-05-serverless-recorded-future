@@ -58,19 +58,15 @@ def valid_json():
     return [{'type': 'domain', 'value': 'cisco.com'}]
 
 
-@patch('api.mapping.datetime')
-@patch('api.mapping.Mapping._valid_time')
 @patch('api.utils.uuid4')
 @patch('api.client.RecordedFutureClient.make_observe')
 @patch('requests.get')
-def test_enrich_call_success(mock_get, mock_request, mock_id, mock_time,
-                             mock_now, client, route, valid_jwt, valid_json):
+def test_enrich_call_success(mock_get, mock_request, mock_id,
+                             client, route, valid_jwt, valid_json):
     mock_request.side_effect = [EXPECTED_RESPONSE_FROM_RECORDED_FUTURE]
     mock_get.return_value = \
         mock_api_response(payload=EXPECTED_RESPONSE_OF_JWKS_ENDPOINT)
     mock_id.side_effect = ids()
-    mock_now.now = Mock(return_value=datetime(2021, 6, 21, 7, 18, 8))
-    mock_time.return_value = mock_valid_time()
     response = client.post(route, headers=get_headers(valid_jwt()),
                            json=valid_json)
     assert response.status_code == HTTPStatus.OK

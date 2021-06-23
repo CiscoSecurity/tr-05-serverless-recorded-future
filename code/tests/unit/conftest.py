@@ -1,3 +1,4 @@
+from datetime import datetime
 from http import HTTPStatus
 from unittest.mock import MagicMock
 
@@ -96,7 +97,7 @@ def indicator_base_payload():
                         "source": "Recorded Future Intelligence Card",
                         "source_uri": "https://app.recordedfuture.com/live/sc/"
                                       "entity/idn%3Acisco.com",
-                        "timestamp": "2021-06-21T07:18:08Z",
+                        "timestamp": f"{datetime.now().isoformat(timespec='seconds')}Z",
                         "title": "Historically Referenced by Insikt Group",
                         "type": "indicator",
                         "valid_time": {
@@ -121,7 +122,7 @@ def indicator_base_payload():
                         "source": "Recorded Future Intelligence Card",
                         "source_uri": "https://app.recordedfuture.com/live/sc/"
                                       "entity/idn%3Acisco.com",
-                        "timestamp": "2021-06-21T07:18:08Z",
+                        "timestamp": f"{datetime.now().isoformat(timespec='seconds')}Z",
                         "title": "Trending in Recorded Future Analyst "
                                  "Community",
                         "type": "indicator",
