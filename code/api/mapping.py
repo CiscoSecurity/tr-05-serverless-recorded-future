@@ -83,7 +83,7 @@ class Mapping:
             **self._defaults(rule, lookup)
         }
 
-    def extract_sighting_of_an_indictor(self, lookup, rule):
+    def extract_sighting_of_an_indicator(self, lookup, rule):
         return {
             'id': transient_id(SIGHTING),
             'count': 1,
