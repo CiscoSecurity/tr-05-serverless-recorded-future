@@ -27,7 +27,8 @@ INDICATOR_SEVERITY = RangeDict({
 })
 
 OBSERVABLES = {
-    'IpAddress': 'ip'
+    'IpAddress': 'ip',
+    'InternetDomainName': 'domain'
 }
 
 ENTITY_RELEVANCE_PERIOD = timedelta(days=30)
