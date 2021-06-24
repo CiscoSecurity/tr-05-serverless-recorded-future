@@ -11,6 +11,7 @@ from api.utils import (
     WRONG_AUDIENCE,
     KID_NOT_FOUND,
     WRONG_JWKS_HOST,
+    JWK_HOST_MISSING,
 )
 from ..payloads_for_tests import (
     EXPECTED_RESPONSE_OF_JWKS_ENDPOINT,
@@ -172,5 +173,5 @@ def test_call_with_missing_jwks_host(
     )
     assert response.status_code == HTTPStatus.OK
     assert response.json == authorization_errors_expected_payload(
-        WRONG_JWKS_HOST
+        JWK_HOST_MISSING
     )
