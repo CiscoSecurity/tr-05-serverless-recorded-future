@@ -13,3 +13,6 @@ class Config:
 
     RECORDED_FUTURE_SEARCH_FIELDS = 'risk,intelCard,sightings,entity,' \
                                     'timestamps'
+
+    USER_AGENT = ('SecureX Threat Response Integrations '
+                  '<tr-integrations-support@cisco.com>')
