@@ -11,6 +11,7 @@ SOURCE = 'Recorded Future Intelligence Card'
 
 INDICATOR = 'indicator'
 SIGHTING = 'sighting'
+RELATIONSHIP = 'relationship'
 
 SIGHTING_SEVERITY = RangeDict({
     range(65, 100): "High",
@@ -95,4 +96,14 @@ class Mapping:
             'internal': False,
             'observables': [self._observables(lookup)],
             **self._defaults(rule, lookup)
+        }
+
+    @staticmethod
+    def extract_relationship(source_ref, target_ref, type_):
+        return {
+            'source_ref': source_ref,
+            'target_ref': target_ref,
+            'relationship_type': type_,
+            'type': RELATIONSHIP,
+            **CTIM_DEFAULTS
         }
