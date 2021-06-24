@@ -39,7 +39,7 @@ def observe_observables():
                 g.indicators.append(indicator)
 
                 sightings = \
-                    mapping.extract_sighting_of_an_indictor(result, rule)
+                    mapping.extract_sighting_of_an_indicator(result, rule)
                 g.sightings.append(sightings)
 
     return jsonify_result()
