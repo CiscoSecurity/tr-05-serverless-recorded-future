@@ -4,7 +4,7 @@ import jwt
 from jwt import InvalidSignatureError, DecodeError, InvalidAudienceError
 from uuid import uuid4
 
-from flask import request, jsonify, g
+from flask import request, jsonify, g, current_app
 import requests
 from requests.exceptions import (
     ConnectionError, InvalidURL, SSLError, HTTPError
@@ -99,6 +99,8 @@ def get_jwt():
         payload = jwt.decode(
             token, key=key, algorithms=['RS256'], audience=[aud.rstrip('/')]
         )
+        set_ctr_entities_limit(payload)
+
         return payload['key']
     except tuple(expected_errors) as error:
         message = expected_errors[error.__class__]
@@ -160,3 +162,12 @@ def jsonify_result():
             del result['data']
 
     return jsonify(result)
+
+
+def set_ctr_entities_limit(payload):
+    try:
+        ctr_entities_limit = int(payload['CTR_ENTITIES_LIMIT'])
+        assert ctr_entities_limit > 0
+    except (KeyError, ValueError, AssertionError):
+        ctr_entities_limit = current_app.config['CTR_DEFAULT_ENTITIES_LIMIT']
+    current_app.config['CTR_ENTITIES_LIMIT'] = ctr_entities_limit

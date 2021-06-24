@@ -1,6 +1,6 @@
 from functools import partial
 
-from flask import Blueprint, g
+from flask import Blueprint, g, current_app
 
 from api.client import RecordedFutureClient
 from api.mapping import Mapping
@@ -33,6 +33,8 @@ def observe_observables():
         result = client.make_observe(observable)
         rules = result['data']['risk'].get('evidenceDetails')
         if rules:
+            if len(rules) > current_app.config['CTR_ENTITIES_LIMIT']:
+                rules = rules[:current_app.config['CTR_ENTITIES_LIMIT']].sort(key=lambda elem: elem['criticality'], reverse=True)
             for rule in rules:
                 indicator = mapping.extract_indicator(result, rule)
                 g.indicators.append(indicator)
