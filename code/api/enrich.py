@@ -34,7 +34,8 @@ def observe_observables():
         rules = result['data']['risk'].get('evidenceDetails')
         if rules:
             if len(rules) > current_app.config['CTR_ENTITIES_LIMIT']:
-                rules = rules[:current_app.config['CTR_ENTITIES_LIMIT']].sort(key=lambda elem: elem['criticality'], reverse=True)
+                rules = rules[:current_app.config['CTR_ENTITIES_LIMIT']].sort(
+                    key=lambda elem: elem['criticality'], reverse=True)
             for rule in rules:
                 indicator = mapping.extract_indicator(result, rule)
                 g.indicators.append(indicator)
