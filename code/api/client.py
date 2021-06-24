@@ -11,7 +11,8 @@ class RecordedFutureClient:
     def __init__(self, api_key):
         self.base_url = current_app.config['RECORDED_FUTURE_API_URL']
         self.headers = {
-            'X-RFToken': api_key
+            'X-RFToken': api_key,
+            'User-Agent': current_app.config['USER_AGENT']
         }
         self.fields = current_app.config['RECORDED_FUTURE_SEARCH_FIELDS']
 
