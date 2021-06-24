@@ -153,9 +153,23 @@ def jsonify_result():
     if g.get('indicators'):
         result['data']['indicators'] = format_docs(g.indicators)
 
+    if g.get('sightings'):
+        result['data']['sightings'] = format_docs(g.sightings)
+
     if g.get('errors'):
         result['errors'] = g.errors
         if not result['data']:
             del result['data']
 
     return jsonify(result)
+
+
+class RangeDict(dict):
+    def __getitem__(self, item):
+        if not isinstance(item, range):
+            for key in self:
+                if item in key:
+                    return self[key]
+            raise KeyError(item)
+        else:
+            return super().__getitem__(item)
