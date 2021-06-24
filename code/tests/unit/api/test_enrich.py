@@ -1,14 +1,12 @@
-from datetime import datetime
 from http import HTTPStatus
-from unittest.mock import patch, Mock
+from unittest.mock import patch
 
 from pytest import fixture
 from requests.exceptions import SSLError
 
 from ..conftest import (
     mock_api_response,
-    indicator_base_payload,
-    mock_valid_time
+    indicator_base_payload
 )
 from ..payloads_for_tests import (
     EXPECTED_RESPONSE_OF_JWKS_ENDPOINT,
