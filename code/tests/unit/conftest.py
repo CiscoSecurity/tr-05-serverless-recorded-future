@@ -135,6 +135,30 @@ def base_payload():
                     }
                 ]
             },
+            "relationships": {
+                "count": 2,
+                "docs": [
+                    {
+                        "relationship_type": "member-of",
+                        "schema_version": "1.1.6",
+                        "source_ref": "transient:sighting-883b44a8-b131-4"
+                                      "1aa-a7d6-005b1f1adb8d",
+                        "target_ref": "transient:indicator-ca332260-0585-"
+                                      "4e36-a2dd-5f3483d67226",
+                        "type": "relationship"
+                    },
+                    {
+                        "relationship_type": "member-of",
+                        "schema_version": "1.1.6",
+                        "source_ref": "transient:sighting-55282619-04f6-"
+                                      "4167-af33-593684f86a39",
+                        "target_ref": "transient:indicator-d89fb782-76d0-41a"
+                                      "a-b373-99eeb9ab3cb7",
+                        "type": "relationship"
+                    }
+                ]
+            },
+
             "sightings": {
                 'count': 2,
                 'docs': [
@@ -149,7 +173,8 @@ def base_payload():
                         'id': 'transient:sighting-883b44a8-b131-41aa-a7d6-005b'
                               '1f1adb8d',
                         'internal': False,
-                        'observables': [None],
+                        'observables': [{'type': 'domain',
+                                         'value': 'cisco.com'}],
                         'observed_time': {
                             'end_time': '2525-01-01T00:00:00Z',
                             'start_time': "2009-05-26T12:15:30.000Z"
@@ -179,7 +204,8 @@ def base_payload():
                         'id': 'transient:sighting-55282619-04f6-4167-af33-'
                               '593684f86a39',
                         'internal': False,
-                        'observables': [None],
+                        'observables': [{'type': 'domain',
+                                         'value': 'cisco.com'}],
                         'observed_time': {
                             'end_time': '2525-01-01T00:00:00Z',
                             'start_time': "2009-05-26T12:15:30.000Z"

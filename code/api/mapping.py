@@ -11,6 +11,7 @@ SOURCE = 'Recorded Future Intelligence Card'
 
 INDICATOR = 'indicator'
 SIGHTING = 'sighting'
+RELATIONSHIP = 'relationship'
 
 SIGHTING_SEVERITY = RangeDict({
     range(65, 100): "High",
@@ -64,7 +65,6 @@ class Mapping:
         return {
             **CTIM_DEFAULTS,
             'confidence': 'High',
-            'producer': 'Recorded Future',
             'title': rule['rule'],
             'description': rule['evidenceString'],
             'short_description': rule['rule'],
@@ -81,6 +81,7 @@ class Mapping:
             'severity': INDICATOR_SEVERITY[
                 int(rule['criticality'])
             ],
+            'producer': 'Recorded Future',
             **self._defaults(rule, lookup)
         }
 
@@ -96,4 +97,15 @@ class Mapping:
             'internal': False,
             'observables': [self._observables(lookup)],
             **self._defaults(rule, lookup)
+        }
+
+    @staticmethod
+    def extract_relationship(source_ref, target_ref, type_):
+        return {
+            'id': transient_id(RELATIONSHIP),
+            'source_ref': source_ref,
+            'target_ref': target_ref,
+            'relationship_type': type_,
+            'type': RELATIONSHIP,
+            **CTIM_DEFAULTS
         }
