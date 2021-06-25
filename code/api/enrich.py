@@ -27,6 +27,7 @@ def observe_observables():
     g.indicators = []
     g.sightings = []
     g.relationships = []
+    g.judgements = []
 
     client = RecordedFutureClient(api_key)
 
@@ -54,6 +55,8 @@ def observe_observables():
                         'member-of'
                     )
                 )
+                judgement = mapping.extract_judgement(result, rule)
+                g.judgements.append(judgement)
 
     return jsonify_result()
 

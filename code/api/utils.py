@@ -164,6 +164,9 @@ def jsonify_result():
     if g.get('relationships'):
         result['data']['relationships'] = format_docs(g.relationships)
 
+    if g.get('judgements'):
+        result['data']['judgements'] = format_docs(g.judgements)
+
     if g.get('errors'):
         result['errors'] = g.errors
         if not result['data']:
