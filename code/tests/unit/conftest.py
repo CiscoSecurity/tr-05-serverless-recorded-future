@@ -135,6 +135,59 @@ def base_payload():
                     }
                 ]
             },
+            "judgements": {
+                "count": 2,
+                "docs": [
+                    {
+                        "confidence": "High",
+                        "disposition": 1,
+                        "disposition_name": "Common",
+                        "id": "transient:judgement-0b466174-d338-47e9-9184-c36"
+                              "6de00f822",
+                        "observable": {
+                            "type": "domain",
+                            "value": "cisco.com"
+                        },
+                        "priority": 90,
+                        "schema_version": "1.1.6",
+                        "severity": "Low",
+                        "source": "Recorded Future Intelligence Card",
+                        "source_uri": "https://app.recordedfuture.com/live/sc/"
+                                      "entity/idn%3Acisco.com",
+                        "timestamp":
+                            f"{datetime.now().isoformat(timespec='seconds')}Z",
+                        "type": "judgement",
+                        "valid_time": {
+                            "end_time": "2021-07-25T12:49:08Z",
+                            "start_time": "2021-06-25T12:49:08Z"
+                        }
+                    },
+                    {
+                        "confidence": "High",
+                        "disposition": 1,
+                        "disposition_name": "Common",
+                        "id": "transient:judgement-223cc16f-93b6-4cec-92d4-90a"
+                              "ffec03ed4",
+                        "observable": {
+                            "type": "domain",
+                            "value": "cisco.com"
+                        },
+                        "priority": 90,
+                        "schema_version": "1.1.6",
+                        "severity": "Low",
+                        "source": "Recorded Future Intelligence Card",
+                        "source_uri": "https://app.recordedfuture.com/live/sc/"
+                                      "entity/idn%3Acisco.com",
+                        "timestamp":
+                            f"{datetime.now().isoformat(timespec='seconds')}Z",
+                        "type": "judgement",
+                        "valid_time": {
+                            "end_time": "2021-07-25T12:49:08Z",
+                            "start_time": "2021-06-25T12:49:08Z"
+                        }
+                    }
+                ]
+            },
             "relationships": {
                 "count": 2,
                 "docs": [
