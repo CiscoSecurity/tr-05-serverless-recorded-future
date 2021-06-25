@@ -44,9 +44,10 @@ class Mapping:
 
     @staticmethod
     def _observables(lookup):
-        if lookup['data']['entity']['type'] in OBSERVABLES.keys():
+        type_ = lookup['data']['entity']['type']
+        if type_ in OBSERVABLES.keys():
             return {
-                'type': OBSERVABLES[lookup['data']['entity']['type']],
+                'type': OBSERVABLES[type_],
                 'value': lookup['data']['entity']['name']
             }
 
