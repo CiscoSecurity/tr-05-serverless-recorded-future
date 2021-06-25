@@ -70,7 +70,7 @@ class Mapping:
 
     def _valid_time(self, lookup, entity):
         if entity == 'judgement':
-            start_time = self.time_format(datetime.now())
+            start_time = self.time_format(datetime.utcnow())
             if lookup['data']['entity']['type'] == 'Hash':
                 end_time = datetime(2525, 1, 1)
             else:
@@ -91,7 +91,7 @@ class Mapping:
             'confidence': 'High',
             'source': 'Recorded Future Intelligence Card',
             'source_uri': lookup['data']['intelCard'],
-            'timestamp': self.time_format(datetime.now())
+            'timestamp': self.time_format(datetime.utcnow())
         }
 
     def extract_indicator(self, lookup, rule):

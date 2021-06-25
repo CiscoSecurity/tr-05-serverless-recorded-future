@@ -4,13 +4,11 @@ from unittest.mock import patch
 from pytest import fixture
 from requests.exceptions import SSLError
 
-from ..conftest import (
-    mock_api_response,
-    base_payload
-)
+from ..conftest import mock_api_response
 from ..payloads_for_tests import (
     EXPECTED_RESPONSE_OF_JWKS_ENDPOINT,
-    EXPECTED_RESPONSE_FROM_RECORDED_FUTURE
+    EXPECTED_RESPONSE_FROM_RECORDED_FUTURE,
+    BASE_PAYLOAD,
 )
 from .utils import get_headers
 
@@ -72,7 +70,7 @@ def test_enrich_call_success(mock_get, mock_request, mock_id,
     response = client.post(route, headers=get_headers(valid_jwt()),
                            json=valid_json)
     assert response.status_code == HTTPStatus.OK
-    assert response.json == base_payload()
+    assert response.json == BASE_PAYLOAD
 
 
 @patch('api.client.RecordedFutureClient._request')
