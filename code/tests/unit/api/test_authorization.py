@@ -10,7 +10,6 @@ from api.utils import (
     WRONG_KEY,
     WRONG_AUDIENCE,
     KID_NOT_FOUND,
-    WRONG_JWKS_HOST,
     JWK_HOST_MISSING,
 )
 from ..payloads_for_tests import (

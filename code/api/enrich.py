@@ -26,6 +26,7 @@ def observe_observables():
 
     g.indicators = []
     g.sightings = []
+    g.relationships = []
 
     client = RecordedFutureClient(api_key)
 
@@ -43,9 +44,16 @@ def observe_observables():
                 indicator = mapping.extract_indicator(result, rule)
                 g.indicators.append(indicator)
 
-                sightings = \
+                sighting = \
                     mapping.extract_sighting_of_an_indicator(result, rule)
-                g.sightings.append(sightings)
+                g.sightings.append(sighting)
+
+                g.relationships.append(
+                    mapping.extract_relationship(
+                        sighting['id'], indicator['id'],
+                        'member-of'
+                    )
+                )
 
     return jsonify_result()
 
