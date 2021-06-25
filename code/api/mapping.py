@@ -65,7 +65,6 @@ class Mapping:
         return {
             **CTIM_DEFAULTS,
             'confidence': 'High',
-            'producer': 'Recorded Future',
             'title': rule['rule'],
             'description': rule['evidenceString'],
             'short_description': rule['rule'],
@@ -82,6 +81,7 @@ class Mapping:
             'severity': INDICATOR_SEVERITY[
                 int(rule['criticality'])
             ],
+            'producer': 'Recorded Future',
             **self._defaults(rule, lookup)
         }
 
@@ -102,6 +102,7 @@ class Mapping:
     @staticmethod
     def extract_relationship(source_ref, target_ref, type_):
         return {
+            'id': transient_id(RELATIONSHIP),
             'source_ref': source_ref,
             'target_ref': target_ref,
             'relationship_type': type_,
