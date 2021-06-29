@@ -1,37 +1,31 @@
-from http import HTTPStatus
-
 from flask import current_app
-import requests
+from rfapi import ConnectApiClient
 
-from api.errors import ObservableNotFoundError
 from api.utils import catch_ssl_errors
 
 
-class RecordedFutureClient:
+class RecordedFutureClient(ConnectApiClient):
+
     def __init__(self, api_key):
-        self.base_url = current_app.config['RECORDED_FUTURE_API_URL']
-        self.headers = {
-            'X-RFToken': api_key,
-            'User-Agent': current_app.config['USER_AGENT']
-        }
-        self.fields = current_app.config['RECORDED_FUTURE_SEARCH_FIELDS']
+        self.fields = current_app.config['SEARCH_FIELDS']
+        super().__init__(api_key, platform=current_app.config['USER_AGENT'])
 
-    def _request(self, observable_type, value, params=None, headers=None):
-        url = '/'.join([self.base_url, observable_type, value])
-
-        response = requests.get(url, params=params, headers=headers)
-        if response.ok:
-            return response.json()
-        else:
-            if response.status_code == HTTPStatus.NOT_FOUND:
-                raise ObservableNotFoundError()
+    def _request(self, lookup, observable):
+        value = observable['value']
+        return lookup(value, fields=self.fields)
 
     @catch_ssl_errors
     def make_observe(self, observable):
-        params = {
-            'metadata': False,
-            'fields': self.fields
+        type_ = observable['type']
+        lookups = {
+            'ip': self.lookup_ip,
+            'ipv6': self.lookup_ip,
+            'domain': self.lookup_domain,
+            'url': self.lookup_url,
+            'sha1': self.lookup_hash,
+            'sha256': self.lookup_hash,
+            'md5': self.lookup_hash
         }
-        result = self._request(observable['type'], observable['value'],
-                               params=params, headers=self.headers)
+        result = self._request(lookups[type_], observable)
+
         return result

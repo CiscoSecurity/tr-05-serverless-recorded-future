@@ -1,7 +1,8 @@
-from flask import Blueprint, current_app
+from flask import Blueprint
+from flask import current_app
 
-from api.client import RecordedFutureClient
 from api.utils import get_jwt, jsonify_data
+from api.client import RecordedFutureClient
 
 health_api = Blueprint('health', __name__)
 
@@ -10,7 +11,6 @@ health_api = Blueprint('health', __name__)
 def health():
     api_key = get_jwt()
     client = RecordedFutureClient(api_key)
-    _ = client.make_observe(
-        current_app.config['RECORDED_FUTURE_HEALTH_CHECK_OBSERVABLE']
-    )
+    _ = client.make_observe(current_app.config['HEALTH_CHECK_OBSERVABLE'])
+
     return jsonify_data({'status': 'ok'})

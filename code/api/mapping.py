@@ -42,12 +42,6 @@ JUDGEMENT_DISPOSITION_NAME = RangeDict({
     range(0, 1): 'Unknown',
 })
 
-OBSERVABLES = {
-    'IpAddress': 'ip',
-    'InternetDomainName': 'domain',
-    'Hash': 'hash'
-}
-
 ENTITY_RELEVANCE_PERIOD = timedelta(days=30)
 
 
@@ -59,14 +53,11 @@ class Mapping:
     def time_format(time):
         return f'{time.isoformat(timespec="seconds")}Z'
 
-    @staticmethod
-    def _observables(lookup):
-        type_ = lookup['data']['entity']['type']
-        if type_ in OBSERVABLES.keys():
-            return {
-                'type': OBSERVABLES[type_],
-                'value': lookup['data']['entity']['name']
-            }
+    def _observables(self, lookup):
+        return {
+            'type': self.observable['type'],
+            'value': lookup['data']['entity']['name']
+        }
 
     def _valid_time(self, lookup, entity):
         if entity == 'judgement':
