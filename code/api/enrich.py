@@ -65,36 +65,28 @@ def refer_observables():
     _ = get_jwt()
     observables = filter_observables(get_observables())
 
-    recorded_future_type = {
-        'ip': 'ip',
-        'ipv6': 'ip',
-        'domain': 'idn',
-        'url': 'URL',
-        'sha1': 'hash',
-        'sha256': 'hash',
-        'md5': 'hash'
-    }
-
     relay_output = []
     for observable in observables:
         if observable['type'] == 'url':
             continue
-        human_readable_types = \
-            current_app.config["SUPPORTED_TYPES"][observable["type"]]
+        type_ = \
+            current_app.config["TYPES_FORMATS"][observable["type"]]
+        human_readable_type = type_[current_app.config['HUMAN_READABLE']]
+        recorded_future_type = type_[current_app.config['RECORDED_FUTURE']]
         relay_output.append({
             'id': (
                     f'ref-recorded-future-search-{observable["type"]}-'
                     + observable["value"]
             ),
             'title': (
-                f'Search events with this {human_readable_types}'
+                f'Search events with this {human_readable_type}'
             ),
             'description': (
-                f'Lookup events with this {human_readable_types} '
+                f'Lookup events with this {human_readable_type} '
                 'on Recorded Future'
             ),
             'url': current_app.config['REFER_URL'].format(
-                type=recorded_future_type[observable['type']],
+                type=recorded_future_type,
                 value=observable['value']
             ),
             'categories': ['Search', 'Recorded Future'],
