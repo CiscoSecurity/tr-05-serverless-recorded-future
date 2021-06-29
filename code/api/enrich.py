@@ -2,10 +2,12 @@ from functools import partial
 
 from flask import Blueprint, g, current_app
 
-from api.client import RecordedFutureClient
 from api.mapping import Mapping
+from api.utils import filter_observables
 from api.schemas import ObservableSchema
+from api.client import RecordedFutureClient
 from api.utils import get_json, get_jwt, jsonify_data, jsonify_result
+
 
 enrich_api = Blueprint('enrich', __name__)
 
@@ -22,7 +24,7 @@ def deliberate_observables():
 @enrich_api.route('/observe/observables', methods=['POST'])
 def observe_observables():
     api_key = get_jwt()
-    observables = get_observables()
+    observables = filter_observables(get_observables())
 
     g.indicators = []
     g.sightings = []

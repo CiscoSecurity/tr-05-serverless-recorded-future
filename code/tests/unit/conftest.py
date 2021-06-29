@@ -1,12 +1,11 @@
-from datetime import datetime
-from http import HTTPStatus
-from unittest.mock import MagicMock
-
-from pytest import fixture
 import jwt
 
-from api.errors import INVALID_ARGUMENT
 from app import app
+from pytest import fixture
+from http import HTTPStatus
+from datetime import datetime
+from unittest.mock import MagicMock
+from api.errors import INVALID_ARGUMENT
 from tests.unit.payloads_for_tests import PRIVATE_KEY
 
 
@@ -87,8 +86,8 @@ def base_payload():
                                        "ommunications. Most recent link (Dec 2"
                                        "2, 2020): https://app.recordedfuture.c"
                                        "om/live/sc/52qYMuHmYqU1",
-                        "id": "transient:indicator-ca332260-0585-4e36-a2dd-5f3"
-                              "483d67226",
+                        "id": "transient:indicator-d89fb782-76d0-41aa-b373"
+                              "-99eeb9ab3cb7",
                         "producer": "Recorded Future",
                         "schema_version": "1.1.6",
                         "severity": 'Low',
@@ -113,8 +112,8 @@ def base_payload():
                                        "s. Recently viewed by many analysts in"
                                        " many organizations in the Recorded Fu"
                                        "ture community.",
-                        "id": "transient:indicator-d89fb782-76d0-41aa-b373-99e"
-                              "eb9ab3cb7",
+                        "id": "transient:indicator-883b44a8-b131-41aa-a7d6-005"
+                              "b1f1adb8d",
                         "producer": "Recorded Future",
                         "schema_version": "1.1.6",
                         "severity": 'Low',
@@ -139,21 +138,25 @@ def base_payload():
                 "count": 2,
                 "docs": [
                     {
+                        "id": "transient:relationship-ca332260-0585-4e36-a2dd"
+                              "-5f3483d67226",
                         "relationship_type": "member-of",
                         "schema_version": "1.1.6",
-                        "source_ref": "transient:sighting-883b44a8-b131-4"
-                                      "1aa-a7d6-005b1f1adb8d",
-                        "target_ref": "transient:indicator-ca332260-0585-"
-                                      "4e36-a2dd-5f3483d67226",
+                        "source_ref": "transient:sighting-55282619-04f6-4167"
+                                      "-af33-593684f86a39",
+                        "target_ref": "transient:indicator-d89fb782-76d0-41aa"
+                                      "-b373-99eeb9ab3cb7",
                         "type": "relationship"
                     },
                     {
+                        "id": "transient:relationship-4316e8d5-495e-4197-8bd8"
+                              "-af40145475da",
                         "relationship_type": "member-of",
                         "schema_version": "1.1.6",
-                        "source_ref": "transient:sighting-55282619-04f6-"
-                                      "4167-af33-593684f86a39",
-                        "target_ref": "transient:indicator-d89fb782-76d0-41a"
-                                      "a-b373-99eeb9ab3cb7",
+                        "source_ref": "transient:sighting-2aa378a5-777f-4280"
+                                      "-939a-43afe8256bf2",
+                        "target_ref": "transient:indicator-883b44a8-b131-41aa"
+                                      "-a7d6-005b1f1adb8d",
                         "type": "relationship"
                     }
                 ]
@@ -170,8 +173,8 @@ def base_payload():
                                        'Communications. Most recent link (Dec '
                                        '22, 2020): https://app.recordedfuture.'
                                        'com/live/sc/52qYMuHmYqU1',
-                        'id': 'transient:sighting-883b44a8-b131-41aa-a7d6-005b'
-                              '1f1adb8d',
+                        'id': 'transient:sighting-55282619-04f6-4167-af33-5936'
+                              '84f86a39',
                         'internal': False,
                         'observables': [{'type': 'domain',
                                          'value': 'cisco.com'}],
@@ -179,7 +182,6 @@ def base_payload():
                             'end_time': '2525-01-01T00:00:00Z',
                             'start_time': "2009-05-26T12:15:30.000Z"
                         },
-                        'producer': 'Recorded Future',
                         'schema_version': '1.1.6',
                         'severity': 'Low',
                         'short_description': 'Historically Referenced by '
@@ -201,8 +203,8 @@ def base_payload():
                                        'by many analysts in many '
                                        'organizations in the Recorded Future '
                                        'community.',
-                        'id': 'transient:sighting-55282619-04f6-4167-af33-'
-                              '593684f86a39',
+                        'id': 'transient:sighting-2aa378a5-777f-4280-939a-43a'
+                              'fe8256bf2',
                         'internal': False,
                         'observables': [{'type': 'domain',
                                          'value': 'cisco.com'}],
@@ -210,7 +212,6 @@ def base_payload():
                             'end_time': '2525-01-01T00:00:00Z',
                             'start_time': "2009-05-26T12:15:30.000Z"
                         },
-                        'producer': 'Recorded Future',
                         'schema_version': '1.1.6',
                         'severity': 'Low',
                         'short_description': 'Trending in Recorded Future '

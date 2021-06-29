@@ -27,11 +27,6 @@ INDICATOR_SEVERITY = RangeDict({
     range(0, 1): None,
 })
 
-OBSERVABLES = {
-    'IpAddress': 'ip',
-    'InternetDomainName': 'domain'
-}
-
 ENTITY_RELEVANCE_PERIOD = timedelta(days=30)
 
 
@@ -43,14 +38,11 @@ class Mapping:
     def time_format(time):
         return f'{time.isoformat(timespec="seconds")}Z'
 
-    @staticmethod
-    def _observables(lookup):
-        type_ = lookup['data']['entity']['type']
-        if type_ in OBSERVABLES.keys():
-            return {
-                'type': OBSERVABLES[type_],
-                'value': lookup['data']['entity']['name']
-            }
+    def _observables(self, lookup):
+        return {
+            'type': self.observable['type'],
+            'value': lookup['data']['entity']['name']
+        }
 
     def _valid_time(self, lookup):
         start_time = lookup['data']['timestamps']['firstSeen']
@@ -69,7 +61,7 @@ class Mapping:
             'description': rule['evidenceString'],
             'short_description': rule['rule'],
             'source': 'Recorded Future Intelligence Card',
-            'source_uri': lookup['data']['intelCard'],
+            'source_uri': lookup['data'].get('intelCard'),
             'timestamp': self.time_format(datetime.now())
         }
 
