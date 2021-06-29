@@ -32,11 +32,19 @@ ENTITY_RELEVANCE_PERIOD = timedelta(days=30)
 class Mapping:
     def __init__(self, observable):
         self.observable = observable
-        self.index = None
 
     @staticmethod
     def time_format(time):
         return f'{time.isoformat(timespec="seconds")}Z'
+
+    @staticmethod
+    def _sighting_start_time(lookup, index):
+        return (
+            lookup['data']
+            ['risk']
+            ['evidenceDetails']
+            [index]['timestamp']
+        )
 
     def _observables(self, lookup):
         return {
@@ -52,19 +60,6 @@ class Mapping:
             'start_time': start_time,
             'end_time': self.time_format(end_time)
         }
-
-    def _sighting_start_time(self, lookup):
-        # Iterate through corresponding evidenceDetails
-        if self.index is None:
-            self.index = 0
-        else:
-            self.index += 1
-        return (
-            lookup['data']
-            ['risk']
-            ['evidenceDetails']
-            [self.index]['timestamp']
-        )
 
     def _defaults(self, rule, lookup):
         return {
@@ -90,14 +85,14 @@ class Mapping:
             **self._defaults(rule, lookup)
         }
 
-    def extract_sighting_of_an_indicator(self, lookup, rule):
+    def extract_sighting_of_an_indicator(self, lookup, rule, index=0):
 
         return {
             'id': transient_id(SIGHTING),
             'count': 1,
             'type': SIGHTING,
             'observed_time': {
-                'start_time': self._sighting_start_time(lookup)
+                'start_time': self._sighting_start_time(lookup, index)
             },
             'severity': SIGHTING_SEVERITY[
                 int(lookup['data']['risk']['score'])
