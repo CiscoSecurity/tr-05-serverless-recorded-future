@@ -69,10 +69,10 @@ def refer_observables():
     for observable in observables:
         if observable['type'] == 'url':
             continue
-        type_ = \
+        types = \
             current_app.config["TYPES_FORMATS"][observable["type"]]
-        human_readable_type = type_[current_app.config['HUMAN_READABLE']]
-        recorded_future_type = type_[current_app.config['RECORDED_FUTURE']]
+        human_readable_type = types[current_app.config['HUMAN_READABLE']]
+        recorded_future_type = types[current_app.config['RECORDED_FUTURE']]
         relay_output.append({
             'id': (
                     f'ref-recorded-future-search-{observable["type"]}-'
