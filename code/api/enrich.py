@@ -63,5 +63,41 @@ def observe_observables():
 @enrich_api.route('/refer/observables', methods=['POST'])
 def refer_observables():
     _ = get_jwt()
-    _ = get_observables()
-    return jsonify_data([])
+    observables = filter_observables(get_observables())
+
+    recorded_future_type = {
+        'ip': 'ip',
+        'ipv6': 'ip',
+        'domain': 'idn',
+        'url': 'URL',
+        'sha1': 'hash',
+        'sha256': 'hash',
+        'md5': 'hash'
+    }
+
+    relay_output = []
+    for observable in observables:
+        if observable['type'] == 'url':
+            continue
+        human_readable_types = \
+            current_app.config["SUPPORTED_TYPES"][observable["type"]]
+        relay_output.append({
+            'id': (
+                    f'ref-recorded-future-search-{observable["type"]}-'
+                    + observable["value"]
+            ),
+            'title': (
+                f'Search events with this {human_readable_types}'
+            ),
+            'description': (
+                f'Lookup events with this {human_readable_types} '
+                'on Recorded Future'
+            ),
+            'url': current_app.config['REFER_URL'].format(
+                type=recorded_future_type[observable['type']],
+                value=observable['value']
+            ),
+            'categories': ['Search', 'Recorded Future'],
+        })
+
+    return jsonify_data(relay_output)
