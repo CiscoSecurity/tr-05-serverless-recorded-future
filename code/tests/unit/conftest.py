@@ -179,8 +179,7 @@ def base_payload():
                         'observables': [{'type': 'domain',
                                          'value': 'cisco.com'}],
                         'observed_time': {
-                            'end_time': '2525-01-01T00:00:00Z',
-                            'start_time': "2009-05-26T12:15:30.000Z"
+                            'start_time': '2020-12-22T00:00:00.000Z'
                         },
                         'schema_version': '1.1.6',
                         'severity': 'Low',
@@ -209,8 +208,7 @@ def base_payload():
                         'observables': [{'type': 'domain',
                                          'value': 'cisco.com'}],
                         'observed_time': {
-                            'end_time': '2525-01-01T00:00:00Z',
-                            'start_time': "2009-05-26T12:15:30.000Z"
+                            'start_time': '2021-06-21T07:33:00.061Z'
                         },
                         'schema_version': '1.1.6',
                         'severity': 'Low',
