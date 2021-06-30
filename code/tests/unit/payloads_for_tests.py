@@ -306,8 +306,7 @@ def base_payload():
                         "confidence": "High",
                         "disposition": 1,
                         "disposition_name": "Common",
-                        "id": "transient:judgement-0b466174-d338-47e9-9184-c36"
-                              "6de00f822",
+                        "id": "transient:judgement-55282619-04f6-4167-af33-593684f86a39",
                         "observable": {
                             "type": "domain",
                             "value": "cisco.com"
@@ -355,17 +354,23 @@ def base_payload():
                 ]
             },
             "relationships": {
-                "count": 2,
+                "count": 4,
                 "docs": [
                     {
-                        "id": "transient:relationship-ca332260-0585-4e36-a2dd"
-                              "-5f3483d67226",
+                        "id": "transient:relationship-ca332260-0585-4e36-a2dd-5f3483d67226",
                         "relationship_type": "member-of",
                         "schema_version": "1.1.6",
-                        "source_ref": "transient:sighting-55282619-04f6-4167"
-                                      "-af33-593684f86a39",
+                        "source_ref": "transient:sighting-0b466174-d338-47e9-9184-c366de00f822",
                         "target_ref": "transient:indicator-d89fb782-76d0-41aa"
                                       "-b373-99eeb9ab3cb7",
+                        "type": "relationship"
+                    },
+                    {
+                        "id": "transient:relationship-3a16f9a4-46ad-4054-91ca-fe7bac9d11bf",
+                        "relationship_type": "element-of",
+                        "schema_version": "1.1.6",
+                        "source_ref": "transient:judgement-55282619-04f6-4167-af33-593684f86a39",
+                        "target_ref": "transient:indicator-d89fb782-76d0-41aa-b373-99eeb9ab3cb7",
                         "type": "relationship"
                     },
                     {
@@ -377,6 +382,14 @@ def base_payload():
                                       "-939a-43afe8256bf2",
                         "target_ref": "transient:indicator-883b44a8-b131-41aa"
                                       "-a7d6-005b1f1adb8d",
+                        "type": "relationship"
+                    },
+                    {
+                        "id": "transient:relationship-794cd761-69af-45dd-b3ea-21aa16dda637",
+                        "relationship_type": "element-of",
+                        "schema_version": "1.1.6",
+                        "source_ref": "transient:judgement-223cc16f-93b6-4cec-92d4-90affec03ed4",
+                        "target_ref": "transient:indicator-883b44a8-b131-41aa-a7d6-005b1f1adb8d",
                         "type": "relationship"
                     }
                 ]
@@ -393,8 +406,7 @@ def base_payload():
                                        'Communications. Most recent link (Dec '
                                        '22, 2020): https://app.recordedfuture.'
                                        'com/live/sc/52qYMuHmYqU1',
-                        'id': 'transient:sighting-55282619-04f6-4167-af33-5936'
-                              '84f86a39',
+                        'id': 'transient:sighting-0b466174-d338-47e9-9184-c366de00f822',
                         'internal': False,
                         'observables': [{'type': 'domain',
                                          'value': 'cisco.com'}],

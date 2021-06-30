@@ -67,7 +67,6 @@ def observe_observables():
                     )
                 )
 
-
     return jsonify_result()
 
 
