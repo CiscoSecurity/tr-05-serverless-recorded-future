@@ -2,12 +2,12 @@ from functools import partial
 
 from flask import Blueprint, g, current_app
 
-from api.mapping import Mapping
 from api.utils import filter_observables
 from api.schemas import ObservableSchema
 from api.client import RecordedFutureClient
 from api.utils import get_json, get_jwt, jsonify_data, jsonify_result
 
+from api.mapping import Mapping
 
 enrich_api = Blueprint('enrich', __name__)
 
@@ -34,9 +34,9 @@ def observe_observables():
     client = RecordedFutureClient(api_key)
 
     for observable in observables:
-        mapping = Mapping(observable)
         result = client.make_observe(observable)
         rules = result['data']['risk'].get('evidenceDetails')
+        mapping = Mapping(observable, result)
         if rules:
             if len(rules) > current_app.config['CTR_ENTITIES_LIMIT']:
                 rules = rules.sort(
@@ -44,25 +44,31 @@ def observe_observables():
                     reverse=True
                 )[:current_app.config['CTR_ENTITIES_LIMIT']]
             for idx, rule in enumerate(rules):
-                indicator = mapping.extract_indicator(result, rule)
+                indicator = mapping.indicator.extract(idx)
                 g.indicators.append(indicator)
 
-                sighting = \
-                    mapping.extract_sighting_of_an_indicator(result, rule, idx)
-                g.sightings.append(sighting)
+                sighting_of_indicator = \
+                    mapping.sighting_of_indicator.extract(idx)
+                g.sightings.append(sighting_of_indicator) \
+                    if sighting_of_indicator else None
 
-                judgement = mapping.extract_judgement(result, rule)
-                g.judgements.append(judgement)
+                sighting_of_observable = \
+                    mapping.sighting_of_observable.extract(idx)
+                g.sightings.append(sighting_of_observable) \
+                    if sighting_of_observable else None
+
+                judgements = mapping.judgement.extract(idx)
+                g.judgements.append(judgements)
 
                 g.relationships.append(
-                    mapping.extract_relationship(
-                        sighting['id'], indicator['id'],
+                    mapping.relationship.extract(
+                        sighting_of_indicator['id'], indicator['id'],
                         'member-of'
                     )
                 )
                 g.relationships.append(
-                    mapping.extract_relationship(
-                        judgement['id'], indicator['id'],
+                    mapping.relationship.extract(
+                        judgements['id'], indicator['id'],
                         'element-of'
                     )
                 )
