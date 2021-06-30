@@ -2,6 +2,7 @@ AUTH_ERROR = 'authorization error'
 INVALID_ARGUMENT = 'invalid argument'
 UNKNOWN = 'unknown'
 OBSERVABLE_NOT_FOUND = 'There are no data for the observable'
+RECORDED_FUTURE_ERROR = 'recorded future error'
 
 
 class TRFormattedError(Exception):
@@ -59,4 +60,12 @@ class ObservableNotFoundError(TRFormattedError):
         super().__init__(
             UNKNOWN,
             OBSERVABLE_NOT_FOUND
+        )
+
+
+class RecordedFutureError(TRFormattedError):
+    def __init__(self, message):
+        super().__init__(
+            code=RECORDED_FUTURE_ERROR,
+            message=message
         )
