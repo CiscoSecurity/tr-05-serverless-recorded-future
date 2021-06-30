@@ -2,12 +2,12 @@ from functools import partial
 
 from flask import Blueprint, g, current_app
 
+from api.mapping import Mapping
 from api.utils import filter_observables
 from api.schemas import ObservableSchema
 from api.client import RecordedFutureClient
 from api.utils import get_json, get_jwt, jsonify_data, jsonify_result
 
-from api.mapping import Mapping
 
 enrich_api = Blueprint('enrich', __name__)
 
