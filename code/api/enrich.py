@@ -51,14 +51,22 @@ def observe_observables():
                     mapping.extract_sighting_of_an_indicator(result, rule, idx)
                 g.sightings.append(sighting)
 
+                judgement = mapping.extract_judgement(result, rule)
+                g.judgements.append(judgement)
+
                 g.relationships.append(
                     mapping.extract_relationship(
                         sighting['id'], indicator['id'],
                         'member-of'
                     )
                 )
-                judgement = mapping.extract_judgement(result, rule)
-                g.judgements.append(judgement)
+                g.relationships.append(
+                    mapping.extract_relationship(
+                        judgement['id'], indicator['id'],
+                        'element-of'
+                    )
+                )
+
 
     return jsonify_result()
 
