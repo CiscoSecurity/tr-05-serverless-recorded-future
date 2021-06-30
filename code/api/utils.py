@@ -1,11 +1,12 @@
 import json
-from json.decoder import JSONDecodeError
 import jwt
-from jwt import InvalidSignatureError, DecodeError, InvalidAudienceError
-from uuid import uuid4
-
-from flask import request, jsonify, g, current_app
 import requests
+
+from uuid import uuid4
+from json.decoder import JSONDecodeError
+from flask import request, jsonify, g, current_app
+from jwt import InvalidSignatureError, DecodeError, InvalidAudienceError
+
 from requests.exceptions import (
     ConnectionError, InvalidURL, SSLError, HTTPError
 )
@@ -164,6 +165,9 @@ def jsonify_result():
     if g.get('relationships'):
         result['data']['relationships'] = format_docs(g.relationships)
 
+    if g.get('judgements'):
+        result['data']['judgements'] = format_docs(g.judgements)
+
     if g.get('errors'):
         result['errors'] = g.errors
         if not result['data']:
@@ -190,3 +194,17 @@ def set_ctr_entities_limit(payload):
     except (KeyError, ValueError, AssertionError):
         ctr_entities_limit = current_app.config['CTR_DEFAULT_ENTITIES_LIMIT']
     current_app.config['CTR_ENTITIES_LIMIT'] = ctr_entities_limit
+
+
+def remove_duplicates(observables):
+    return [dict(t) for t in {tuple(d.items()) for d in observables}]
+
+
+def filter_observables(observables):
+    supported_types = current_app.config['SUPPORTED_TYPES']
+    observables = remove_duplicates(observables)
+    return list(
+        filter(lambda obs: (
+                obs['type'] in supported_types and obs["value"] != "0"
+        ), observables)
+    )

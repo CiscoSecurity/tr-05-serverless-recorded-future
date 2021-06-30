@@ -46,7 +46,7 @@
     {
       "id": "respond",
       "description": "Response actions"
-    },
+    }
   ],
   "properties": {
     "supported-apis": [
@@ -55,7 +55,7 @@
       "deliberate/observables",
       "refer/observables",
       "respond/observables",
-      "respond/trigger",
+      "respond/trigger"
     ],
     "auth-type": "configuration-token",
     "configuration-token-alg": "RS256",
