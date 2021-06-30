@@ -89,7 +89,7 @@ class Mapping:
             **CTIM_DEFAULTS,
             'confidence': 'High',
             'source': 'Recorded Future Intelligence Card',
-            'source_uri': lookup['data']['intelCard'],
+            'source_uri': lookup['data'].get('intelCard'),
             'timestamp': self.time_format(datetime.utcnow())
         }
 
