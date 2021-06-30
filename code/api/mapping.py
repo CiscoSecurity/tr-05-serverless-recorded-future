@@ -95,6 +95,8 @@ class Mapping:
                 lambda: 'Recorded Future Intelligence Card',
             SIGHTING_OF_INDICATOR:
                 lambda: 'Recorded Future Intelligence Card',
+            JUDGEMENT:
+                lambda: 'Recorded Future Intelligence Card',
             SIGHTING_OF_OBSERVABLE:
                 lambda: self._sighting(index)['source']
         }
@@ -105,6 +107,8 @@ class Mapping:
             INDICATOR:
                 lambda: self.lookup['data'].get('intelCard'),
             SIGHTING_OF_INDICATOR:
+                lambda: self.lookup['data'].get('intelCard'),
+            JUDGEMENT:
                 lambda: self.lookup['data'].get('intelCard'),
             SIGHTING_OF_OBSERVABLE:
                 lambda: self._sighting(index).get('url')
@@ -135,6 +139,17 @@ class Mapping:
                 lambda: self._evidence_detail(index)['evidenceString'],
             SIGHTING_OF_INDICATOR:
                 lambda: self._evidence_detail(index)['evidenceString'],
+            SIGHTING_OF_OBSERVABLE:
+                lambda: f"Seen by {self._sighting(index)['source']}"
+        }
+        return descriptions[self.name]()
+
+    def short_description(self, index=0):
+        descriptions = {
+            INDICATOR:
+                lambda: self._evidence_detail(index)['rule'],
+            SIGHTING_OF_INDICATOR:
+                lambda: self._evidence_detail(index)['rule'],
             SIGHTING_OF_OBSERVABLE:
                 lambda: f"Seen by {self._sighting(index)['source']}"
         }
@@ -224,7 +239,7 @@ class Mapping:
                 'producer': 'Recorded Future',
                 'title': self.root.title(index),
                 'description': self.root.description(index),
-                'short_description': self.root.description(index),
+                'short_description': self.root.short_description(index),
                 'timestamp': self.root.time_format(datetime.utcnow()),
                 **CTIM_DEFAULTS
             }
@@ -247,7 +262,7 @@ class Mapping:
                 'observables': [self.root.observables()],
                 'title': self.root.title(index),
                 'description': self.root.description(index),
-                'short_description': self.root.description(index),
+                'short_description': self.root.short_description(index),
                 'timestamp': self.root.time_format(datetime.utcnow()),
                 **SIGHTING_DEFAULTS,
                 **CTIM_DEFAULTS
@@ -272,7 +287,7 @@ class Mapping:
                     'observables': [self.root.observables()],
                     'title': self.root.title(index),
                     'description': self.root.description(index),
-                    'short_description': self.root.description(index),
+                    'short_description': self.root.short_description(index),
                     'timestamp': self.root.time_format(datetime.utcnow()),
                     **SIGHTING_DEFAULTS,
                     **CTIM_DEFAULTS
@@ -285,6 +300,7 @@ class Mapping:
             self.root = root
 
         @overwrite_root_class_name
+        @add_source_uri
         def extract(self, index=0):
             criticality = self.root._evidence_detail(index)['criticality']
             return {
@@ -296,6 +312,9 @@ class Mapping:
                 'priority': 90,
                 'severity': self.root.severity(index),
                 'valid_time': self.root.valid_time(JUDGEMENT),
+                'timestamp': self.root.time_format(datetime.utcnow()),
+                'source': self.root.source(index),
+                'confidence': 'High',
                 **CTIM_DEFAULTS
             }
 

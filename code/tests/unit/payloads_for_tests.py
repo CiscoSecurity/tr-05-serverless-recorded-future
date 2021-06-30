@@ -1,30 +1,29 @@
 from datetime import datetime, timedelta
 
-
 EXPECTED_RESPONSE_OF_JWKS_ENDPOINT = {
-  'keys': [
-    {
-      'kty': 'RSA',
-      'n': 'tSKfSeI0fukRIX38AHlKB1YPpX8PUYN2JdvfM-XjNmLfU1M74N0V'
-           'mdzIX95sneQGO9kC2xMIE-AIlt52Yf_KgBZggAlS9Y0Vx8DsSL2H'
-           'vOjguAdXir3vYLvAyyHin_mUisJOqccFKChHKjnk0uXy_38-1r17'
-           '_cYTp76brKpU1I4kM20M__dbvLBWjfzyw9ehufr74aVwr-0xJfsB'
-           'Vr2oaQFww_XHGz69Q7yHK6DbxYO4w4q2sIfcC4pT8XTPHo4JZ2M7'
-           '33Ea8a7HxtZS563_mhhRZLU5aynQpwaVv2U--CL6EvGt8TlNZOke'
-           'Rv8wz-Rt8B70jzoRpVK36rR-pHKlXhMGT619v82LneTdsqA25Wi2'
-           'Ld_c0niuul24A6-aaj2u9SWbxA9LmVtFntvNbRaHXE1SLpLPoIp8'
-           'uppGF02Nz2v3ld8gCnTTWfq_BQ80Qy8e0coRRABECZrjIMzHEg6M'
-           'loRDy4na0pRQv61VogqRKDU2r3_VezFPQDb3ciYsZjWBr3HpNOkU'
-           'jTrvLmFyOE9Q5R_qQGmc6BYtfk5rn7iIfXlkJAZHXhBy-ElBuiBM'
-           '-YSkFM7dH92sSIoZ05V4MP09Xcppx7kdwsJy72Sust9Hnd9B7V35'
-           'YnVF6W791lVHnenhCJOziRmkH4xLLbPkaST2Ks3IHH7tVltM6NsR'
-           'k3jNdVM',
-      'e': 'AQAB',
-      'alg': 'RS256',
-      'kid': '02B1174234C29F8EFB69911438F597FF3FFEE6B7',
-      'use': 'sig'
-    }
-  ]
+    'keys': [
+        {
+            'kty': 'RSA',
+            'n': 'tSKfSeI0fukRIX38AHlKB1YPpX8PUYN2JdvfM-XjNmLfU1M74N0V'
+                 'mdzIX95sneQGO9kC2xMIE-AIlt52Yf_KgBZggAlS9Y0Vx8DsSL2H'
+                 'vOjguAdXir3vYLvAyyHin_mUisJOqccFKChHKjnk0uXy_38-1r17'
+                 '_cYTp76brKpU1I4kM20M__dbvLBWjfzyw9ehufr74aVwr-0xJfsB'
+                 'Vr2oaQFww_XHGz69Q7yHK6DbxYO4w4q2sIfcC4pT8XTPHo4JZ2M7'
+                 '33Ea8a7HxtZS563_mhhRZLU5aynQpwaVv2U--CL6EvGt8TlNZOke'
+                 'Rv8wz-Rt8B70jzoRpVK36rR-pHKlXhMGT619v82LneTdsqA25Wi2'
+                 'Ld_c0niuul24A6-aaj2u9SWbxA9LmVtFntvNbRaHXE1SLpLPoIp8'
+                 'uppGF02Nz2v3ld8gCnTTWfq_BQ80Qy8e0coRRABECZrjIMzHEg6M'
+                 'loRDy4na0pRQv61VogqRKDU2r3_VezFPQDb3ciYsZjWBr3HpNOkU'
+                 'jTrvLmFyOE9Q5R_qQGmc6BYtfk5rn7iIfXlkJAZHXhBy-ElBuiBM'
+                 '-YSkFM7dH92sSIoZ05V4MP09Xcppx7kdwsJy72Sust9Hnd9B7V35'
+                 'YnVF6W791lVHnenhCJOziRmkH4xLLbPkaST2Ks3IHH7tVltM6NsR'
+                 'k3jNdVM',
+            'e': 'AQAB',
+            'alg': 'RS256',
+            'kid': '02B1174234C29F8EFB69911438F597FF3FFEE6B7',
+            'use': 'sig'
+        }
+    ]
 }
 
 RESPONSE_OF_JWKS_ENDPOINT_WITH_WRONG_KEY = {
@@ -277,13 +276,13 @@ def base_payload():
                                        "s. Recently viewed by many analysts in"
                                        " many organizations in the Recorded Fu"
                                        "ture community.",
-                        "id": "transient:indicator-883b44a8-b131-41aa-a7d6-005"
-                              "b1f1adb8d",
+                        "id": "transient:indicator-2aa378a5-777f-4280-939a-43afe8256bf2",
                         "producer": "Recorded Future",
                         "schema_version": "1.1.6",
                         "severity": 'Low',
-                        "short_description": "Trending in Recorded Future Anal"
-                                             "yst Community",
+                        "short_description": 'Trending in Recorded '
+                                             'Future Analyst '
+                                             'Community',
                         "source": "Recorded Future Intelligence Card",
                         "source_uri": "https://app.recordedfuture.com/live/sc/"
                                       "entity/idn%3Acisco.com",
@@ -306,7 +305,7 @@ def base_payload():
                         "confidence": "High",
                         "disposition": 1,
                         "disposition_name": "Common",
-                        "id": "transient:judgement-55282619-04f6-4167-af33-593684f86a39",
+                        "id": "transient:judgement-ca332260-0585-4e36-a2dd-5f3483d67226",
                         "observable": {
                             "type": "domain",
                             "value": "cisco.com"
@@ -330,8 +329,7 @@ def base_payload():
                         "confidence": "High",
                         "disposition": 1,
                         "disposition_name": "Common",
-                        "id": "transient:judgement-223cc16f-93b6-4cec-92d4-90a"
-                              "ffec03ed4",
+                        "id": "transient:judgement-794cd761-69af-45dd-b3ea-21aa16dda637",
                         "observable": {
                             "type": "domain",
                             "value": "cisco.com"
@@ -357,7 +355,7 @@ def base_payload():
                 "count": 4,
                 "docs": [
                     {
-                        "id": "transient:relationship-ca332260-0585-4e36-a2dd-5f3483d67226",
+                        "id": "transient:relationship-3a16f9a4-46ad-4054-91ca-fe7bac9d11bf",
                         "relationship_type": "member-of",
                         "schema_version": "1.1.6",
                         "source_ref": "transient:sighting-0b466174-d338-47e9-9184-c366de00f822",
@@ -366,37 +364,34 @@ def base_payload():
                         "type": "relationship"
                     },
                     {
-                        "id": "transient:relationship-3a16f9a4-46ad-4054-91ca-fe7bac9d11bf",
+                        "id": "transient:relationship-883b44a8-b131-41aa-a7d6-005b1f1adb8d",
                         "relationship_type": "element-of",
                         "schema_version": "1.1.6",
-                        "source_ref": "transient:judgement-55282619-04f6-4167-af33-593684f86a39",
+                        "source_ref": "transient:judgement-ca332260-0585-4e36-a2dd-5f3483d67226",
                         "target_ref": "transient:indicator-d89fb782-76d0-41aa-b373-99eeb9ab3cb7",
                         "type": "relationship"
                     },
                     {
-                        "id": "transient:relationship-4316e8d5-495e-4197-8bd8"
-                              "-af40145475da",
+                        "id": "transient:relationship-a93e5ea5-3125-4f27-a5a6-108522227306",
                         "relationship_type": "member-of",
                         "schema_version": "1.1.6",
-                        "source_ref": "transient:sighting-2aa378a5-777f-4280"
-                                      "-939a-43afe8256bf2",
-                        "target_ref": "transient:indicator-883b44a8-b131-41aa"
-                                      "-a7d6-005b1f1adb8d",
+                        "source_ref": "transient:sighting-223cc16f-93b6-4cec-92d4-90affec03ed4",
+                        "target_ref": "transient:indicator-2aa378a5-777f-4280-939a-43afe8256bf2",
                         "type": "relationship"
                     },
                     {
-                        "id": "transient:relationship-794cd761-69af-45dd-b3ea-21aa16dda637",
+                        "id": "transient:relationship-7799155c-1b74-45b8-8d6c-33e65950bb49",
                         "relationship_type": "element-of",
                         "schema_version": "1.1.6",
-                        "source_ref": "transient:judgement-223cc16f-93b6-4cec-92d4-90affec03ed4",
-                        "target_ref": "transient:indicator-883b44a8-b131-41aa-a7d6-005b1f1adb8d",
+                        "source_ref": "transient:judgement-794cd761-69af-45dd-b3ea-21aa16dda637",
+                        "target_ref": "transient:indicator-2aa378a5-777f-4280-939a-43afe8256bf2",
                         "type": "relationship"
                     }
                 ]
             },
 
             "sightings": {
-                'count': 2,
+                'count': 4,
                 'docs': [
                     {
                         'confidence': 'High', 'count': 1,
@@ -415,8 +410,9 @@ def base_payload():
                         },
                         'schema_version': '1.1.6',
                         'severity': 'Low',
-                        'short_description': 'Historically Referenced by '
-                                             'Insikt Group',
+                        'short_description': 'Historically '
+                                             'Referenced by Insikt '
+                                             'Group',
                         'source': 'Recorded Future Intelligence Card',
                         'source_uri': 'https://app.recordedfuture.com/live/'
                                       'sc/entity/idn%3Acisco.com',
@@ -424,6 +420,29 @@ def base_payload():
                             f"{datetime.utcnow().isoformat(timespec='seconds')}Z",
                         'title': 'Historically Referenced by Insikt Group',
                         'type': 'sighting'
+                    },
+                    {
+                        "confidence": "High",
+                        "count": 1,
+                        "description": "Seen by Fast Company",
+                        "id": "transient:sighting-55282619-04f6-4167-af33-593684f86a39",
+                        "internal": False,
+                        "observables": [
+                            {
+                                "type": "domain",
+                                "value": "cisco.com"
+                            }
+                        ],
+                        "observed_time": {
+                            "start_time": "2009-05-26T13:00:23.000Z"
+                        },
+                        "schema_version": "1.1.6",
+                        "short_description": "Seen by Fast Company",
+                        "source": "Fast Company",
+                        "source_uri": "http://feedproxy.google.com/~r/fastcompany/headlines/~3/2lG8pHrMDbA/1279087",
+                        "timestamp": f"{datetime.utcnow().isoformat(timespec='seconds')}Z",
+                        "title": "How Big Business Weathers the Economic Storm",
+                        "type": "sighting"
                     },
                     {
                         'confidence': 'High',
@@ -434,8 +453,7 @@ def base_payload():
                                        'by many analysts in many '
                                        'organizations in the Recorded Future '
                                        'community.',
-                        'id': 'transient:sighting-2aa378a5-777f-4280-939a-43a'
-                              'fe8256bf2',
+                        'id': 'transient:sighting-223cc16f-93b6-4cec-92d4-90affec03ed4',
                         'internal': False,
                         'observables': [{'type': 'domain',
                                          'value': 'cisco.com'}],
@@ -444,8 +462,9 @@ def base_payload():
                         },
                         'schema_version': '1.1.6',
                         'severity': 'Low',
-                        'short_description': 'Trending in Recorded Future '
-                                             'Analyst Community',
+                        'short_description': 'Trending in Recorded '
+                                                       'Future Analyst '
+                                                       'Community',
                         'source': 'Recorded Future Intelligence Card',
                         'source_uri': 'https://app.recordedfuture.com/live/'
                                       'sc/entity/idn%3Acisco.com',
@@ -454,6 +473,29 @@ def base_payload():
                         'title': 'Trending in Recorded Future Analyst '
                                  'Community',
                         'type': 'sighting'
+                    },
+                    {
+                        "confidence": "High",
+                        "count": 1,
+                        "description": "Seen by GitHub",
+                        "id": "transient:sighting-4316e8d5-495e-4197-8bd8-af40145475da",
+                        "internal": False,
+                        "observables": [
+                            {
+                                "type": "domain",
+                                "value": "cisco.com"
+                            }
+                        ],
+                        "observed_time": {
+                            "start_time": "2021-06-21T07:04:30.000Z"
+                        },
+                        "schema_version": "1.1.6",
+                        "short_description": 'Seen by GitHub',
+                        "source": "GitHub",
+                        "source_uri": "https://github.com/TheXPerienceProject/android_kernel_xiaomi_vayu/blob/master/Documentation/translations/zh_CN/HOWTO",
+                        "timestamp": f"{datetime.utcnow().isoformat(timespec='seconds')}Z",
+                        "title": "HOWTO",
+                        "type": "sighting"
                     }
                 ]
             }
