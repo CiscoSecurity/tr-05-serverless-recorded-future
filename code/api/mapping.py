@@ -2,7 +2,6 @@ from datetime import datetime, timedelta
 
 from api.utils import transient_id, RangeDict
 
-
 CTIM_DEFAULTS = {
     'schema_version': '1.1.6'
 }
@@ -53,6 +52,15 @@ class Mapping:
     def time_format(time):
         return f'{time.isoformat(timespec="seconds")}Z'
 
+    @staticmethod
+    def _sighting_start_time(lookup, index):
+        return (
+            lookup['data']
+            ['risk']
+            ['evidenceDetails']
+            [index]['timestamp']
+        )
+
     def _observables(self, lookup):
         return {
             'type': self.observable['type'],
@@ -100,12 +108,15 @@ class Mapping:
             **self._defaults(lookup)
         }
 
-    def extract_sighting_of_an_indicator(self, lookup, rule):
+    def extract_sighting_of_an_indicator(self, lookup, rule, index=0):
+
         return {
             'id': transient_id(SIGHTING),
             'count': 1,
             'type': SIGHTING,
-            'observed_time': self._valid_time(lookup, SIGHTING),
+            'observed_time': {
+                'start_time': self._sighting_start_time(lookup, index)
+            },
             'severity': SIGHTING_SEVERITY[
                 int(lookup['data']['risk']['score'])
             ],

@@ -1,7 +1,10 @@
 from flask import current_app
+from rfapi.error import Error
 from rfapi import ConnectApiClient
 
 from api.utils import catch_ssl_errors
+
+from api.errors import RecordedFutureError
 
 
 class RecordedFutureClient(ConnectApiClient):
@@ -26,6 +29,8 @@ class RecordedFutureClient(ConnectApiClient):
             'sha256': self.lookup_hash,
             'md5': self.lookup_hash
         }
-        result = self._request(lookups[type_], observable)
-
+        try:
+            result = self._request(lookups[type_], observable)
+        except Error as error:
+            raise RecordedFutureError(error.args[0])
         return result

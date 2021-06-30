@@ -201,7 +201,7 @@ def remove_duplicates(observables):
 
 
 def filter_observables(observables):
-    supported_types = current_app.config['SUPPORTED_TYPES']
+    supported_types = current_app.config['TYPES_FORMATS']
     observables = remove_duplicates(observables)
     return list(
         filter(lambda obs: (

@@ -43,12 +43,12 @@ def observe_observables():
                     key=lambda elem: elem['criticality'],
                     reverse=True
                 )[:current_app.config['CTR_ENTITIES_LIMIT']]
-            for rule in rules:
+            for idx, rule in enumerate(rules):
                 indicator = mapping.extract_indicator(result, rule)
                 g.indicators.append(indicator)
 
                 sighting = \
-                    mapping.extract_sighting_of_an_indicator(result, rule)
+                    mapping.extract_sighting_of_an_indicator(result, rule, idx)
                 g.sightings.append(sighting)
 
                 g.relationships.append(
@@ -66,5 +66,33 @@ def observe_observables():
 @enrich_api.route('/refer/observables', methods=['POST'])
 def refer_observables():
     _ = get_jwt()
-    _ = get_observables()
-    return jsonify_data([])
+    observables = filter_observables(get_observables())
+
+    relay_output = []
+    for observable in observables:
+        if observable['type'] == 'url':
+            continue
+        types = \
+            current_app.config["TYPES_FORMATS"][observable["type"]]
+        human_readable_type = types[current_app.config['HUMAN_READABLE']]
+        recorded_future_type = types[current_app.config['RECORDED_FUTURE']]
+        relay_output.append({
+            'id': (
+                    f'ref-recorded-future-search-{observable["type"]}-'
+                    + observable["value"]
+            ),
+            'title': (
+                f'Search events with this {human_readable_type}'
+            ),
+            'description': (
+                f'Lookup events with this {human_readable_type} '
+                'on Recorded Future'
+            ),
+            'url': current_app.config['REFER_URL'].format(
+                type=recorded_future_type,
+                value=observable['value']
+            ),
+            'categories': ['Search', 'Recorded Future'],
+        })
+
+    return jsonify_data(relay_output)
