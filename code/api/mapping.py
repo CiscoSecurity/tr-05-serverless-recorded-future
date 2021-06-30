@@ -12,6 +12,7 @@ INDICATOR = 'indicator'
 SIGHTING = 'sighting'
 RELATIONSHIP = 'relationship'
 JUDGEMENT = 'judgement'
+VERDICT = 'verdict'
 
 SIGHTING_SEVERITY = RangeDict({
     range(65, 100): "High",
@@ -34,7 +35,7 @@ JUDGEMENT_SEVERITY = RangeDict({
     range(0, 1): None,
 })
 
-JUDGEMENT_DISPOSITION_NAME = RangeDict({
+DISPOSITION_NAME = RangeDict({
     range(3, 5): 'Malicious',
     range(2, 3): 'Suspicious',
     range(1, 2): 'Common',
@@ -68,7 +69,7 @@ class Mapping:
         }
 
     def _valid_time(self, lookup, entity):
-        if entity == 'judgement':
+        if entity in ('judgement', 'verdict'):
             start_time = self.time_format(datetime.utcnow())
             if lookup['data']['entity']['type'] == 'Hash':
                 end_time = datetime(2525, 1, 1)
@@ -143,7 +144,7 @@ class Mapping:
         return {
             'id': transient_id(JUDGEMENT),
             'disposition': rule['criticality'],
-            'disposition_name': JUDGEMENT_DISPOSITION_NAME[
+            'disposition_name': DISPOSITION_NAME[
                 rule['criticality']
             ],
             'type': JUDGEMENT,
@@ -152,4 +153,14 @@ class Mapping:
             'severity': JUDGEMENT_SEVERITY[rule['criticality']],
             'valid_time': self._valid_time(lookup, JUDGEMENT),
             **self._defaults(lookup)
+        }
+
+    def extract_verdict(self, lookup):
+        return {
+            'disposition': lookup['data']['risk']['criticality'],
+            'disposition_name': DISPOSITION_NAME[
+                lookup['data']['risk']['criticality']],
+            'type': VERDICT,
+            'observable': self._observables(lookup),
+            'valid_time': self._valid_time(lookup, VERDICT),
         }

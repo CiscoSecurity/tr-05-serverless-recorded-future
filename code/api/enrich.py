@@ -16,9 +16,21 @@ get_observables = partial(get_json, schema=ObservableSchema(many=True))
 
 @enrich_api.route('/deliberate/observables', methods=['POST'])
 def deliberate_observables():
-    _ = get_jwt()
-    _ = get_observables()
-    return jsonify_data({})
+    api_key = get_jwt()
+    observables = filter_observables(get_observables())
+
+    g.verdicts = []
+
+    client = RecordedFutureClient(api_key)
+
+    for observable in observables:
+        mapping = Mapping(observable)
+        result = client.make_observe(observable)
+
+        if result:
+            g.verdicts.append(mapping.extract_verdict(result))
+
+    return jsonify_result()
 
 
 @enrich_api.route('/observe/observables', methods=['POST'])
@@ -30,6 +42,7 @@ def observe_observables():
     g.sightings = []
     g.relationships = []
     g.judgements = []
+    g.verdicts = []
 
     client = RecordedFutureClient(api_key)
 
@@ -37,6 +50,9 @@ def observe_observables():
         mapping = Mapping(observable)
         result = client.make_observe(observable)
         rules = result['data']['risk'].get('evidenceDetails')
+
+        judgements_for_observable = []
+
         if rules:
             if len(rules) > current_app.config['CTR_ENTITIES_LIMIT']:
                 rules = rules.sort(
@@ -52,7 +68,7 @@ def observe_observables():
                 g.sightings.append(sighting)
 
                 judgement = mapping.extract_judgement(result, rule)
-                g.judgements.append(judgement)
+                judgements_for_observable.append(judgement)
 
                 g.relationships.append(
                     mapping.extract_relationship(
@@ -66,6 +82,13 @@ def observe_observables():
                         'element-of'
                     )
                 )
+
+        if judgements_for_observable:
+            g.judgements.extend(judgements_for_observable)
+            for judgement in judgements_for_observable:
+                verdict = mapping.extract_verdict(result)
+                verdict['judgement_id'] = judgement['id']
+                g.verdicts.append(verdict)
 
     return jsonify_result()
 
