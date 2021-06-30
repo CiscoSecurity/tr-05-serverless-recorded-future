@@ -84,15 +84,6 @@ class Mapping:
             'end_time': self.time_format(end_time)
         }
 
-    def _defaults(self, lookup):
-        return {
-            **CTIM_DEFAULTS,
-            'confidence': 'High',
-            'source': 'Recorded Future Intelligence Card',
-            'source_uri': lookup['data']['intelCard'],
-            'timestamp': self.time_format(datetime.utcnow())
-        }
-
     def extract_indicator(self, lookup, rule):
         return {
             'id': transient_id(INDICATOR),
@@ -101,11 +92,15 @@ class Mapping:
             'severity': INDICATOR_SEVERITY[
                 int(rule['criticality'])
             ],
+            'source': 'Recorded Future Intelligence Card',
+            'confidence': 'High',
             'producer': 'Recorded Future',
             'title': rule['rule'],
             'description': rule['evidenceString'],
             'short_description': rule['rule'],
-            **self._defaults(lookup)
+            'source_uri': lookup['data']['intelCard'],
+            'timestamp': self.time_format(datetime.utcnow()),
+            **CTIM_DEFAULTS
         }
 
     def extract_sighting_of_an_indicator(self, lookup, rule, index=0):
@@ -120,12 +115,40 @@ class Mapping:
             'severity': SIGHTING_SEVERITY[
                 int(lookup['data']['risk']['score'])
             ],
+            'confidence': 'High',
             'internal': False,
+            'source': 'Recorded Future Intelligence Card',
             'observables': [self._observables(lookup)],
             'title': rule['rule'],
             'description': rule['evidenceString'],
             'short_description': rule['rule'],
-            **self._defaults(lookup)
+            'source_uri': lookup['data']['intelCard'],
+            'timestamp': self.time_format(datetime.utcnow()),
+            **CTIM_DEFAULTS
+        }
+
+    def extract_sighting_of_an_observable(self, lookup, rule):
+        source = lookup['data']['sightings']['source']
+        return {
+            'id': transient_id(SIGHTING),
+            'count': 1,
+            'type': SIGHTING,
+            'observed_time': {
+                'start_time': lookup['data']['sightings']['published']
+            },
+            'severity': SIGHTING_SEVERITY[
+                int(lookup['data']['risk']['score'])
+            ],
+            'confidence': 'High',
+            'internal': False,
+            'observables': [self._observables(lookup)],
+            'title': lookup['data']['sightings']['title'],
+            'description': f'Seen by {source}',
+            'short_description': rule['rule'],
+            'source': source,
+            'source_uri': lookup['data']['sightings']['url'],
+            'timestamp': self.time_format(datetime.utcnow()),
+            **CTIM_DEFAULTS
         }
 
     @staticmethod
@@ -151,5 +174,5 @@ class Mapping:
             'priority': 90,
             'severity': JUDGEMENT_SEVERITY[rule['criticality']],
             'valid_time': self._valid_time(lookup, JUDGEMENT),
-            **self._defaults(lookup)
+            **CTIM_DEFAULTS
         }
