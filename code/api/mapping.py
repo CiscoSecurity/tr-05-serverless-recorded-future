@@ -98,7 +98,7 @@ class Mapping:
             'title': rule['rule'],
             'description': rule['evidenceString'],
             'short_description': rule['rule'],
-            'source_uri': lookup['data']['intelCard'],
+            'source_uri': lookup['data'].get('intelCard'),
             'timestamp': self.time_format(datetime.utcnow()),
             **CTIM_DEFAULTS
         }
@@ -122,7 +122,7 @@ class Mapping:
             'title': rule['rule'],
             'description': rule['evidenceString'],
             'short_description': rule['rule'],
-            'source_uri': lookup['data']['intelCard'],
+            'source_uri': lookup['data'].get('intelCard'),
             'timestamp': self.time_format(datetime.utcnow()),
             **CTIM_DEFAULTS
         }
