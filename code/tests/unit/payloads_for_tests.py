@@ -395,7 +395,7 @@ def base_payload():
                 ]
             },
             'verdicts': {
-                'count': 2,
+                'count': 1,
                 'docs': [
                     {
                         'disposition': 1,
@@ -410,20 +410,7 @@ def base_payload():
                             "start_time":
                                 f"{datetime.utcnow().isoformat(timespec='seconds')}Z"
                         }
-                    },
-                    {'disposition': 1,
-                     'disposition_name': 'Common',
-                     'judgement_id': 'transient:judgement-223cc16f-93b6-4cec-92d4-90affec03ed4',
-                     'observable': {'type': 'domain',
-                                    'value': 'cisco.com'},
-                     'type': 'verdict',
-                     'valid_time': {
-                         "end_time":
-                             f"{(datetime.utcnow() + timedelta(days=30)).isoformat(timespec='seconds')}Z",
-                         "start_time":
-                             f"{datetime.utcnow().isoformat(timespec='seconds')}Z"
-                     }
-                     }
+                    }
                 ]
             },
             "sightings": {

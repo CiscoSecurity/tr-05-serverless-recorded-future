@@ -54,11 +54,10 @@ def observe_observables():
         judgements_for_observable = []
 
         if rules:
-            if len(rules) > current_app.config['CTR_ENTITIES_LIMIT']:
-                rules = rules.sort(
-                    key=lambda elem: elem['criticality'],
-                    reverse=True
-                )[:current_app.config['CTR_ENTITIES_LIMIT']]
+            rules.sort(
+                key=lambda elem: elem['criticality'],
+                reverse=True
+            )
             for idx, rule in enumerate(rules):
                 indicator = mapping.extract_indicator(result, rule)
                 g.indicators.append(indicator)
@@ -85,10 +84,9 @@ def observe_observables():
 
         if judgements_for_observable:
             g.judgements.extend(judgements_for_observable)
-            for judgement in judgements_for_observable:
-                verdict = mapping.extract_verdict(result)
-                verdict['judgement_id'] = judgement['id']
-                g.verdicts.append(verdict)
+            verdict = mapping.extract_verdict(result)
+            verdict['judgement_id'] = judgements_for_observable[0].get('id')
+            g.verdicts.append(verdict)
 
     return jsonify_result()
 
