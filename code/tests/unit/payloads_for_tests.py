@@ -389,7 +389,25 @@ def base_payload():
                     }
                 ]
             },
-
+            'verdicts': {
+                'count': 1,
+                'docs': [
+                    {
+                        'disposition': 1,
+                        'disposition_name': 'Common',
+                        'judgement_id': 'transient:judgement-ca332260-0585-4e36-a2dd-5f3483d67226',
+                        'observable': {'type': 'domain',
+                                       'value': 'cisco.com'},
+                        'type': 'verdict',
+                        'valid_time': {
+                            "end_time":
+                                f"{(datetime.utcnow() + timedelta(days=30)).isoformat(timespec='seconds')}Z",
+                            "start_time":
+                                f"{datetime.utcnow().isoformat(timespec='seconds')}Z"
+                        }
+                    }
+                ]
+            },
             "sightings": {
                 'count': 4,
                 'docs': [
@@ -496,6 +514,33 @@ def base_payload():
                         "timestamp": f"{datetime.utcnow().isoformat(timespec='seconds')}Z",
                         "title": "HOWTO",
                         "type": "sighting"
+                    }
+                ]
+            }
+        }
+    }
+
+
+def deliberate_payload():
+    return {
+        "data": {
+            "verdicts": {
+                "count": 1,
+                "docs": [
+                    {
+                        "disposition": 1,
+                        "disposition_name": "Common",
+                        "observable": {
+                            "type": "domain",
+                            "value": "cisco.com"
+                        },
+                        "type": "verdict",
+                        "valid_time": {
+                            "end_time":
+                                f"{(datetime.utcnow() + timedelta(days=30)).isoformat(timespec='seconds')}Z",
+                            "start_time":
+                                f"{datetime.utcnow().isoformat(timespec='seconds')}Z"
+                        }
                     }
                 ]
             }

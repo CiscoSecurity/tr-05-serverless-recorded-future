@@ -16,9 +16,21 @@ get_observables = partial(get_json, schema=ObservableSchema(many=True))
 
 @enrich_api.route('/deliberate/observables', methods=['POST'])
 def deliberate_observables():
-    _ = get_jwt()
-    _ = get_observables()
-    return jsonify_data({})
+    api_key = get_jwt()
+    observables = filter_observables(get_observables())
+
+    g.verdicts = []
+
+    client = RecordedFutureClient(api_key)
+
+    for observable in observables:
+        result = client.make_observe(observable)
+        mapping = Mapping(observable, result)
+
+        if result:
+            g.verdicts.append(mapping.verdict.extract())
+
+    return jsonify_result()
 
 
 @enrich_api.route('/observe/observables', methods=['POST'])
@@ -30,6 +42,7 @@ def observe_observables():
     g.sightings = []
     g.relationships = []
     g.judgements = []
+    g.verdicts = []
 
     client = RecordedFutureClient(api_key)
 
@@ -37,12 +50,14 @@ def observe_observables():
         result = client.make_observe(observable)
         rules = result['data']['risk'].get('evidenceDetails')
         mapping = Mapping(observable, result)
+
+        judgements_for_observable = []
+
         if rules:
-            if len(rules) > current_app.config['CTR_ENTITIES_LIMIT']:
-                rules = rules.sort(
-                    key=lambda elem: elem['criticality'],
-                    reverse=True
-                )[:current_app.config['CTR_ENTITIES_LIMIT']]
+            rules.sort(
+                key=lambda elem: elem['criticality'],
+                reverse=True
+            )
             for idx, rule in enumerate(rules):
                 indicator = mapping.indicator.extract(idx)
                 g.indicators.append(indicator)
@@ -57,8 +72,8 @@ def observe_observables():
                 g.sightings.append(sighting_of_observable) \
                     if sighting_of_observable else None
 
-                judgements = mapping.judgement.extract(idx)
-                g.judgements.append(judgements)
+                judgement = mapping.judgement.extract(idx)
+                judgements_for_observable.append(judgement)
 
                 g.relationships.append(
                     mapping.relationship.extract(
@@ -68,10 +83,16 @@ def observe_observables():
                 )
                 g.relationships.append(
                     mapping.relationship.extract(
-                        judgements['id'], indicator['id'],
+                        judgement['id'], indicator['id'],
                         'element-of'
                     )
                 )
+
+        if judgements_for_observable:
+            g.judgements.extend(judgements_for_observable)
+            verdict = mapping.verdict.extract()
+            verdict['judgement_id'] = judgements_for_observable[0].get('id')
+            g.verdicts.append(verdict)
 
     return jsonify_result()
 

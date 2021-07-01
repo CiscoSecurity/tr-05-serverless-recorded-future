@@ -9,11 +9,13 @@ from ..payloads_for_tests import (
     EXPECTED_RESPONSE_OF_JWKS_ENDPOINT,
     EXPECTED_RESPONSE_FROM_RECORDED_FUTURE,
     base_payload,
+    deliberate_payload,
 )
 from .utils import get_headers
 
 
 def routes():
+    yield '/deliberate/observables'
     yield '/observe/observables'
 
 
@@ -76,7 +78,10 @@ def test_enrich_call_success(mock_get, mock_request, mock_id,
     response = client.post(route, headers=get_headers(valid_jwt()),
                            json=valid_json)
     assert response.status_code == HTTPStatus.OK
-    assert response.json == base_payload()
+    if route == '/deliberate/observables':
+        assert response.json == deliberate_payload()
+    else:
+        assert response.json == base_payload()
 
 
 @patch('api.client.RecordedFutureClient._request')

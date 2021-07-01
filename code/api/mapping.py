@@ -19,6 +19,7 @@ SIGHTING_DEFAULTS = {
 
 SOURCE = 'Recorded Future Intelligence Card'
 
+VERDICT = 'verdict'
 SIGHTING = 'sighting'
 INDICATOR = 'indicator'
 JUDGEMENT = 'judgement'
@@ -48,7 +49,7 @@ JUDGEMENT_SEVERITY = RangeDict({
     range(0, 1): None,
 })
 
-JUDGEMENT_DISPOSITION_NAME = RangeDict({
+DISPOSITION_NAME = RangeDict({
     range(3, 5): 'Malicious',
     range(2, 3): 'Suspicious',
     range(1, 2): 'Common',
@@ -87,6 +88,7 @@ class Mapping:
         self.sighting_of_indicator = self.SightingOfIndicator(self)
         self.sighting_of_observable = self.SightingOfObservable(self)
         self.judgement = self.Judgement(self)
+        self.verdict = self.Verdict(self)
         self.relationship = self.Relationship()
 
     @staticmethod
@@ -191,7 +193,7 @@ class Mapping:
         }
 
     def valid_time(self, entity):
-        if entity == 'judgement':
+        if entity in ('judgement', 'verdict'):
             start_time = self.time_format(datetime.utcnow())
             if self.lookup['data']['entity']['type'] == 'Hash':
                 end_time = datetime(2525, 1, 1)
@@ -311,7 +313,7 @@ class Mapping:
             return {
                 'id': transient_id(JUDGEMENT),
                 'disposition': criticality,
-                'disposition_name': JUDGEMENT_DISPOSITION_NAME[criticality],
+                'disposition_name': DISPOSITION_NAME[criticality],
                 'type': JUDGEMENT,
                 'observable': self.root.observables(),
                 'priority': 90,
@@ -321,6 +323,22 @@ class Mapping:
                 'source': self.root.source(index),
                 **CTIM_DEFAULTS,
                 **CONFIDENCE
+            }
+
+    class Verdict:
+        name = VERDICT
+
+        def __init__(self, root):
+            self.root = root
+
+        def extract(self,):
+            disposition = self.root.lookup['data']['risk']['criticality']
+            return {
+                'disposition': disposition,
+                'disposition_name': DISPOSITION_NAME[disposition],
+                'type': VERDICT,
+                'observable': self.root.observables(),
+                'valid_time': self.root.valid_time(VERDICT),
             }
 
     class Relationship:
