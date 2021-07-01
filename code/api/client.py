@@ -1,10 +1,12 @@
 from flask import current_app
-from rfapi.error import Error
+from rfapi.error import AuthenticationError
 from rfapi import ConnectApiClient
 
 from api.utils import catch_ssl_errors
 
-from api.errors import RecordedFutureError
+from api.errors import AuthorizationError
+
+INVALID_API_KEY = 'Invalid API key'
 
 
 class RecordedFutureClient(ConnectApiClient):
@@ -19,6 +21,10 @@ class RecordedFutureClient(ConnectApiClient):
 
     @catch_ssl_errors
     def make_observe(self, observable):
+        expected_errors = (
+            AuthenticationError,
+            UnicodeEncodeError,
+        )
         type_ = observable['type']
         lookups = {
             'ip': self.lookup_ip,
@@ -31,6 +37,6 @@ class RecordedFutureClient(ConnectApiClient):
         }
         try:
             result = self._request(lookups[type_], observable)
-        except Error as error:
-            raise RecordedFutureError(error.args[0])
+        except expected_errors:
+            raise AuthorizationError(INVALID_API_KEY)
         return result
