@@ -90,13 +90,14 @@ class Mapping:
         return f'{time.isoformat(timespec="seconds")}Z'
 
     def source(self, index=0):
+        source = 'Recorded Future Intelligence Card'
         sources = {
             INDICATOR:
-                lambda: 'Recorded Future Intelligence Card',
+                lambda: source,
             SIGHTING_OF_INDICATOR:
-                lambda: 'Recorded Future Intelligence Card',
+                lambda: source,
             JUDGEMENT:
-                lambda: 'Recorded Future Intelligence Card',
+                lambda: source,
             SIGHTING_OF_OBSERVABLE:
                 lambda: self._sighting(index)['source']
         }
