@@ -6,10 +6,14 @@ CTIM_DEFAULTS = {
     'schema_version': '1.1.6'
 }
 
+CONFIDENCE = {
+    'confidence': 'High'
+}
+
 SIGHTING_DEFAULTS = {
     'count': 1,
     'internal': False,
-    'confidence': 'High'
+    **CONFIDENCE
 
 }
 
@@ -236,13 +240,13 @@ class Mapping:
                 'valid_time': self.root.valid_time(INDICATOR),
                 'severity': self.root.severity(index),
                 'source': self.root.source(index),
-                'confidence': 'High',
                 'producer': 'Recorded Future',
                 'title': self.root.title(index),
                 'description': self.root.description(index),
                 'short_description': self.root.short_description(index),
                 'timestamp': self.root.time_format(datetime.utcnow()),
-                **CTIM_DEFAULTS
+                **CTIM_DEFAULTS,
+                **CONFIDENCE
             }
 
     class SightingOfIndicator:
@@ -315,8 +319,8 @@ class Mapping:
                 'valid_time': self.root.valid_time(JUDGEMENT),
                 'timestamp': self.root.time_format(datetime.utcnow()),
                 'source': self.root.source(index),
-                'confidence': 'High',
-                **CTIM_DEFAULTS
+                **CTIM_DEFAULTS,
+                **CONFIDENCE
             }
 
     class Relationship:
