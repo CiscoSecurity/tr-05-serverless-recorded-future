@@ -24,11 +24,11 @@ def deliberate_observables():
     client = RecordedFutureClient(api_key)
 
     for observable in observables:
-        mapping = Mapping(observable)
         result = client.make_observe(observable)
+        mapping = Mapping(observable, result)
 
         if result:
-            g.verdicts.append(mapping.extract_verdict(result))
+            g.verdicts.append(mapping.verdict.extract())
 
     return jsonify_result()
 
@@ -47,9 +47,9 @@ def observe_observables():
     client = RecordedFutureClient(api_key)
 
     for observable in observables:
-        mapping = Mapping(observable)
         result = client.make_observe(observable)
         rules = result['data']['risk'].get('evidenceDetails')
+        mapping = Mapping(observable, result)
 
         judgements_for_observable = []
 
@@ -59,24 +59,30 @@ def observe_observables():
                 reverse=True
             )
             for idx, rule in enumerate(rules):
-                indicator = mapping.extract_indicator(result, rule)
+                indicator = mapping.indicator.extract(idx)
                 g.indicators.append(indicator)
 
-                sighting = \
-                    mapping.extract_sighting_of_an_indicator(result, rule, idx)
-                g.sightings.append(sighting)
+                sighting_of_indicator = \
+                    mapping.sighting_of_indicator.extract(idx)
+                g.sightings.append(sighting_of_indicator) \
+                    if sighting_of_indicator else None
 
-                judgement = mapping.extract_judgement(result, rule)
+                sighting_of_observable = \
+                    mapping.sighting_of_observable.extract(idx)
+                g.sightings.append(sighting_of_observable) \
+                    if sighting_of_observable else None
+
+                judgement = mapping.judgement.extract(idx)
                 judgements_for_observable.append(judgement)
 
                 g.relationships.append(
-                    mapping.extract_relationship(
-                        sighting['id'], indicator['id'],
+                    mapping.relationship.extract(
+                        sighting_of_indicator['id'], indicator['id'],
                         'member-of'
                     )
                 )
                 g.relationships.append(
-                    mapping.extract_relationship(
+                    mapping.relationship.extract(
                         judgement['id'], indicator['id'],
                         'element-of'
                     )
@@ -84,7 +90,7 @@ def observe_observables():
 
         if judgements_for_observable:
             g.judgements.extend(judgements_for_observable)
-            verdict = mapping.extract_verdict(result)
+            verdict = mapping.verdict.extract()
             verdict['judgement_id'] = judgements_for_observable[0].get('id')
             g.verdicts.append(verdict)
 
