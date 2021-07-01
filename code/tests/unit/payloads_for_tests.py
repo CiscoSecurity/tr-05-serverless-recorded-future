@@ -394,7 +394,25 @@ def base_payload():
                     }
                 ]
             },
-
+            'verdicts': {
+                'count': 1,
+                'docs': [
+                    {
+                        'disposition': 1,
+                        'disposition_name': 'Common',
+                        'judgement_id': 'transient:judgement-55282619-04f6-4167-af33-593684f86a39',
+                        'observable': {'type': 'domain',
+                                       'value': 'cisco.com'},
+                        'type': 'verdict',
+                        'valid_time': {
+                            "end_time":
+                                f"{(datetime.utcnow() + timedelta(days=30)).isoformat(timespec='seconds')}Z",
+                            "start_time":
+                                f"{datetime.utcnow().isoformat(timespec='seconds')}Z"
+                        }
+                    }
+                ]
+            },
             "sightings": {
                 'count': 2,
                 'docs': [
@@ -454,6 +472,33 @@ def base_payload():
                         'title': 'Trending in Recorded Future Analyst '
                                  'Community',
                         'type': 'sighting'
+                    }
+                ]
+            }
+        }
+    }
+
+
+def deliberate_payload():
+    return {
+        "data": {
+            "verdicts": {
+                "count": 1,
+                "docs": [
+                    {
+                        "disposition": 1,
+                        "disposition_name": "Common",
+                        "observable": {
+                            "type": "domain",
+                            "value": "cisco.com"
+                        },
+                        "type": "verdict",
+                        "valid_time": {
+                            "end_time":
+                                f"{(datetime.utcnow() + timedelta(days=30)).isoformat(timespec='seconds')}Z",
+                            "start_time":
+                                f"{datetime.utcnow().isoformat(timespec='seconds')}Z"
+                        }
                     }
                 ]
             }
