@@ -12,7 +12,7 @@
   ],
   "configuration_spec": [
     {
-      "key": "custom_API_KEY",
+      "key": "custom_key",
       "type": "api_key",
       "label": "API KEY",
       "tooltip": "The module API KEY",
