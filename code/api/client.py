@@ -3,8 +3,8 @@ from rfapi.error import AuthenticationError, Error
 from rfapi import ConnectApiClient
 
 from api.utils import catch_ssl_errors
-
 from api.errors import AuthorizationError, RecordedFutureError
+
 
 INVALID_API_KEY = 'Invalid API key'
 
