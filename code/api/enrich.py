@@ -58,6 +58,7 @@ def observe_observables():
                 key=lambda elem: elem['criticality'],
                 reverse=True
             )
+            rules = rules[:current_app.config['CTR_ENTITIES_LIMIT']]
             for idx, rule in enumerate(rules):
                 indicator = mapping.indicator.extract(idx)
                 g.indicators.append(indicator)
