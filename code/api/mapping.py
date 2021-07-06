@@ -70,7 +70,11 @@ def overwrite_root_class_name(func):
 def add_source_uri(func):
     def wraps(*args, **kwargs):
         result = func(*args, **kwargs)
-        uri = args[0].root.source_uri(args[1])
+
+        uri = args[0].root.source_uri(
+            sighting=kwargs.get('sighting'),
+            index=kwargs.get('index')
+        )
         if uri:
             result['source_uri'] = uri
         return result
@@ -95,7 +99,7 @@ class Mapping:
     def time_format(time):
         return f'{time.isoformat(timespec="seconds")}Z'
 
-    def source(self, index=0):
+    def source(self, index=0, sighting=None):
         source = 'Recorded Future Intelligence Card'
         sources = {
             INDICATOR:
@@ -105,11 +109,11 @@ class Mapping:
             JUDGEMENT:
                 lambda: source,
             SIGHTING_OF_OBSERVABLE:
-                lambda: self._sighting(index)['source']
+                lambda: sighting['source']
         }
         return sources[self.name]()
 
-    def source_uri(self, index=0):
+    def source_uri(self, index=0, sighting=None):
         uri = {
             INDICATOR:
                 lambda: self.lookup['data'].get('intelCard'),
@@ -118,7 +122,7 @@ class Mapping:
             JUDGEMENT:
                 lambda: self.lookup['data'].get('intelCard'),
             SIGHTING_OF_OBSERVABLE:
-                lambda: self._sighting(index).get('url')
+                lambda: sighting.get('url')
         }
 
         return uri[self.name]()
@@ -140,40 +144,40 @@ class Mapping:
         }
         return severity[self.name]()
 
-    def description(self, index=0):
+    def description(self, index=0, sighting=None):
         descriptions = {
             INDICATOR:
                 lambda: self._evidence_detail(index)['evidenceString'],
             SIGHTING_OF_INDICATOR:
                 lambda: self._evidence_detail(index)['evidenceString'],
             SIGHTING_OF_OBSERVABLE:
-                lambda: f"Seen by {self._sighting(index)['source']}"
+                lambda: f"Seen by {sighting['source']}"
         }
         return descriptions[self.name]()
 
-    def short_description(self, index=0):
+    def short_description(self, index=0, sighting=None):
         descriptions = {
             INDICATOR:
                 lambda: self._evidence_detail(index)['rule'],
             SIGHTING_OF_INDICATOR:
                 lambda: self._evidence_detail(index)['rule'],
             SIGHTING_OF_OBSERVABLE:
-                lambda: f"Seen by {self._sighting(index)['source']}"
+                lambda: f"Seen by {sighting['source']}"
         }
         return descriptions[self.name]()
 
-    def title(self, index=0):
+    def title(self, index=0, sighting=None):
         titles = {
             INDICATOR:
                 lambda: self._evidence_detail(index)['rule'],
             SIGHTING_OF_INDICATOR:
                 lambda: self._evidence_detail(index)['rule'],
             SIGHTING_OF_OBSERVABLE:
-                lambda: self._sighting(index)['title']
+                lambda: sighting['title']
         }
         return titles[self.name]()
 
-    def observed_time(self, index=0):
+    def observed_time(self, index=0, sighting=None):
         time = {
             SIGHTING_OF_INDICATOR:
                 lambda: {
@@ -181,7 +185,7 @@ class Mapping:
                 },
             SIGHTING_OF_OBSERVABLE:
                 lambda: {
-                    'start_time': self._sighting(index)['published']
+                    'start_time': sighting['published']
                 }
         }
         return time[self.name]()
@@ -208,15 +212,6 @@ class Mapping:
             'start_time': start_time,
             'end_time': self.time_format(end_time)
         }
-
-    def _sighting(self, index):
-        result = {}
-        try:
-            result = self.lookup['data']['sightings'][index]
-        except IndexError:
-            pass
-
-        return result
 
     def _evidence_detail(self, index):
         result = {}
@@ -283,22 +278,21 @@ class Mapping:
 
         @overwrite_root_class_name
         @add_source_uri
-        def extract(self, index=0):
-            sightings = self.root.lookup['data']['sightings']
-            if sightings and index <= len(sightings) - 1:
-                return {
-                    'id': transient_id(SIGHTING),
-                    'type': SIGHTING,
-                    'observed_time': self.root.observed_time(index),
-                    'source': self.root.source(index),
-                    'observables': [self.root.observables()],
-                    'title': self.root.title(index),
-                    'description': self.root.description(index),
-                    'short_description': self.root.short_description(index),
-                    'timestamp': self.root.time_format(datetime.utcnow()),
-                    **SIGHTING_DEFAULTS,
-                    **CTIM_DEFAULTS
-                }
+        def extract(self, sighting, index=0):
+            return {
+                'id': transient_id(SIGHTING),
+                'type': SIGHTING,
+                'observed_time': self.root.observed_time(sighting=sighting),
+                'source': self.root.source(sighting=sighting),
+                'observables': [self.root.observables()],
+                'title': self.root.title(sighting=sighting),
+                'description': self.root.description(sighting=sighting),
+                'short_description':
+                    self.root.short_description(sighting=sighting),
+                'timestamp': self.root.time_format(datetime.utcnow()),
+                **SIGHTING_DEFAULTS,
+                **CTIM_DEFAULTS
+            }
 
     class Judgement:
         name = JUDGEMENT
