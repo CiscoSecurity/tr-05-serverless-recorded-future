@@ -62,15 +62,15 @@ def observe_observables():
             )
             rules = rules[:limit]
             for idx, rule in enumerate(rules):
-                indicator = mapping.indicator.extract(index=idx)
+                indicator = mapping.indicator.extract(rule)
                 g.indicators.append(indicator)
 
                 sighting_of_indicator = \
-                    mapping.sighting_of_indicator.extract(index=idx)
+                    mapping.sighting_of_indicator.extract(rule)
                 g.sightings.append(sighting_of_indicator) \
                     if sighting_of_indicator else None
 
-                judgement = mapping.judgement.extract(index=idx)
+                judgement = mapping.judgement.extract(rule)
                 judgements_for_observable.append(judgement)
 
                 g.relationships.append(
@@ -89,9 +89,7 @@ def observe_observables():
             for idx, sighting in sightings:
                 if len(g.sightings) < limit:
                     sighting_of_observable = \
-                        mapping.sighting_of_observable.extract(
-                            sighting=sighting, index=idx
-                        )
+                        mapping.sighting_of_observable.extract(sighting)
                     g.sightings.append(sighting_of_observable) \
                         if sighting_of_observable else None
 

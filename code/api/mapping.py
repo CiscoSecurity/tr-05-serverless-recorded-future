@@ -71,10 +71,7 @@ def add_source_uri(func):
     def wraps(*args, **kwargs):
         result = func(*args, **kwargs)
 
-        uri = args[0].root.source_uri(
-            sighting=kwargs.get('sighting'),
-            index=kwargs.get('index')
-        )
+        uri = args[0].root.source_uri(args[1])
         if uri:
             result['source_uri'] = uri
         return result
@@ -99,7 +96,7 @@ class Mapping:
     def time_format(time):
         return f'{time.isoformat(timespec="seconds")}Z'
 
-    def source(self, index=0, sighting=None):
+    def source(self, entity):
         source = 'Recorded Future Intelligence Card'
         sources = {
             INDICATOR:
@@ -109,11 +106,11 @@ class Mapping:
             JUDGEMENT:
                 lambda: source,
             SIGHTING_OF_OBSERVABLE:
-                lambda: sighting['source']
+                lambda: entity['source']
         }
         return sources[self.name]()
 
-    def source_uri(self, index=0, sighting=None):
+    def source_uri(self, entity):
         uri = {
             INDICATOR:
                 lambda: self.lookup['data'].get('intelCard'),
@@ -122,16 +119,16 @@ class Mapping:
             JUDGEMENT:
                 lambda: self.lookup['data'].get('intelCard'),
             SIGHTING_OF_OBSERVABLE:
-                lambda: sighting.get('url')
+                lambda: entity.get('url')
         }
 
         return uri[self.name]()
 
-    def severity(self, index=0):
+    def severity(self, entity):
         severity = {
             INDICATOR:
                 lambda: INDICATOR_SEVERITY[
-                    int(self._evidence_detail(index)['criticality'])
+                    int(entity['criticality'])
                 ],
             SIGHTING_OF_INDICATOR:
                 lambda: SIGHTING_SEVERITY[
@@ -139,53 +136,53 @@ class Mapping:
                 ],
             JUDGEMENT:
                 lambda: JUDGEMENT_SEVERITY[
-                    int(self._evidence_detail(index)['criticality'])
+                    int(entity['criticality'])
                 ],
         }
         return severity[self.name]()
 
-    def description(self, index=0, sighting=None):
+    def description(self, entity):
         descriptions = {
             INDICATOR:
-                lambda: self._evidence_detail(index)['evidenceString'],
+                lambda: entity['evidenceString'],
             SIGHTING_OF_INDICATOR:
-                lambda: self._evidence_detail(index)['evidenceString'],
+                lambda: entity['evidenceString'],
             SIGHTING_OF_OBSERVABLE:
-                lambda: f"Seen by {sighting['source']}"
+                lambda: f"Seen by {entity['source']}"
         }
         return descriptions[self.name]()
 
-    def short_description(self, index=0, sighting=None):
+    def short_description(self, entity):
         descriptions = {
             INDICATOR:
-                lambda: self._evidence_detail(index)['rule'],
+                lambda: entity['rule'],
             SIGHTING_OF_INDICATOR:
-                lambda: self._evidence_detail(index)['rule'],
+                lambda: entity['rule'],
             SIGHTING_OF_OBSERVABLE:
-                lambda: f"Seen by {sighting['source']}"
+                lambda: f"Seen by {entity['source']}"
         }
         return descriptions[self.name]()
 
-    def title(self, index=0, sighting=None):
+    def title(self, entity):
         titles = {
             INDICATOR:
-                lambda: self._evidence_detail(index)['rule'],
+                lambda: entity['rule'],
             SIGHTING_OF_INDICATOR:
-                lambda: self._evidence_detail(index)['rule'],
+                lambda: entity['rule'],
             SIGHTING_OF_OBSERVABLE:
-                lambda: sighting['title']
+                lambda: entity['title']
         }
         return titles[self.name]()
 
-    def observed_time(self, index=0, sighting=None):
+    def observed_time(self, entity):
         time = {
             SIGHTING_OF_INDICATOR:
                 lambda: {
-                    'start_time': self._evidence_detail(index)['timestamp']
+                    'start_time': entity['timestamp']
                 },
             SIGHTING_OF_OBSERVABLE:
                 lambda: {
-                    'start_time': sighting['published']
+                    'start_time': entity['published']
                 }
         }
         return time[self.name]()
@@ -213,15 +210,6 @@ class Mapping:
             'end_time': self.time_format(end_time)
         }
 
-    def _evidence_detail(self, index):
-        result = {}
-        try:
-            result = self.lookup['data']['risk']['evidenceDetails'][index]
-        except IndexError:
-            pass
-
-        return result
-
     class Indicator:
         name = INDICATOR
 
@@ -230,17 +218,17 @@ class Mapping:
 
         @overwrite_root_class_name
         @add_source_uri
-        def extract(self, index=0):
+        def extract(self, entity):
             return {
                 'id': transient_id(INDICATOR),
                 'type': INDICATOR,
                 'valid_time': self.root.valid_time(INDICATOR),
-                'severity': self.root.severity(index),
-                'source': self.root.source(index),
+                'severity': self.root.severity(entity),
+                'source': self.root.source(entity),
                 'producer': 'Recorded Future',
-                'title': self.root.title(index),
-                'description': self.root.description(index),
-                'short_description': self.root.short_description(index),
+                'title': self.root.title(entity),
+                'description': self.root.description(entity),
+                'short_description': self.root.short_description(entity),
                 'timestamp': self.root.time_format(datetime.utcnow()),
                 **CTIM_DEFAULTS,
                 **CONFIDENCE
@@ -254,17 +242,17 @@ class Mapping:
 
         @overwrite_root_class_name
         @add_source_uri
-        def extract(self, index=0):
+        def extract(self, entity):
             return {
                 'id': transient_id(SIGHTING),
                 'type': SIGHTING,
-                'observed_time': self.root.observed_time(index),
-                'severity': self.root.severity(index),
-                'source': self.root.source(index),
+                'observed_time': self.root.observed_time(entity),
+                'severity': self.root.severity(entity),
+                'source': self.root.source(entity),
                 'observables': [self.root.observables()],
-                'title': self.root.title(index),
-                'description': self.root.description(index),
-                'short_description': self.root.short_description(index),
+                'title': self.root.title(entity),
+                'description': self.root.description(entity),
+                'short_description': self.root.short_description(entity),
                 'timestamp': self.root.time_format(datetime.utcnow()),
                 **SIGHTING_DEFAULTS,
                 **CTIM_DEFAULTS
@@ -278,17 +266,17 @@ class Mapping:
 
         @overwrite_root_class_name
         @add_source_uri
-        def extract(self, sighting, index=0):
+        def extract(self, entity):
             return {
                 'id': transient_id(SIGHTING),
                 'type': SIGHTING,
-                'observed_time': self.root.observed_time(sighting=sighting),
-                'source': self.root.source(sighting=sighting),
+                'observed_time': self.root.observed_time(entity),
+                'source': self.root.source(entity),
                 'observables': [self.root.observables()],
-                'title': self.root.title(sighting=sighting),
-                'description': self.root.description(sighting=sighting),
+                'title': self.root.title(entity),
+                'description': self.root.description(entity),
                 'short_description':
-                    self.root.short_description(sighting=sighting),
+                    self.root.short_description(entity),
                 'timestamp': self.root.time_format(datetime.utcnow()),
                 **SIGHTING_DEFAULTS,
                 **CTIM_DEFAULTS
@@ -302,8 +290,8 @@ class Mapping:
 
         @overwrite_root_class_name
         @add_source_uri
-        def extract(self, index=0):
-            criticality = self.root._evidence_detail(index)['criticality']
+        def extract(self, entity):
+            criticality = entity['criticality']
             return {
                 'id': transient_id(JUDGEMENT),
                 'disposition': criticality,
@@ -311,10 +299,10 @@ class Mapping:
                 'type': JUDGEMENT,
                 'observable': self.root.observables(),
                 'priority': 90,
-                'severity': self.root.severity(index),
+                'severity': self.root.severity(entity),
                 'valid_time': self.root.valid_time(JUDGEMENT),
                 'timestamp': self.root.time_format(datetime.utcnow()),
-                'source': self.root.source(index),
+                'source': self.root.source(entity),
                 **CTIM_DEFAULTS,
                 **CONFIDENCE
             }
@@ -325,7 +313,7 @@ class Mapping:
         def __init__(self, root):
             self.root = root
 
-        def extract(self,):
+        def extract(self):
             disposition = self.root.lookup['data']['risk']['criticality']
             return {
                 'disposition': disposition,
