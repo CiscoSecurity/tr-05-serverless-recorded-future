@@ -61,7 +61,7 @@ def observe_observables():
                 reverse=True
             )
             rules = rules[:limit]
-            for idx, rule in enumerate(rules):
+            for rule in rules:
                 indicator = mapping.indicator.extract(rule)
                 g.indicators.append(indicator)
 
@@ -85,8 +85,8 @@ def observe_observables():
                         'element-of'
                     )
                 )
-            sightings = enumerate(result['data']['sightings'][:limit])
-            for idx, sighting in sightings:
+            sightings = result['data']['sightings'][:limit]
+            for sighting in sightings:
                 if len(g.sightings) < limit:
                     sighting_of_observable = \
                         mapping.sighting_of_observable.extract(sighting)
