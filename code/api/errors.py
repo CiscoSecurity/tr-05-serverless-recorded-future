@@ -31,7 +31,7 @@ class InvalidArgumentError(TRFormattedError):
     def __init__(self, message):
         super().__init__(
             INVALID_ARGUMENT,
-            str(message)
+            f'Invalid JSON payload received. {str(message)}'
         )
 
 
