@@ -209,5 +209,6 @@ def filter_observables(observables):
     return list(
         filter(lambda obs: (
                 obs['type'] in supported_types and obs["value"] != "0"
+                and not obs["value"].isspace()
         ), observables)
     )
