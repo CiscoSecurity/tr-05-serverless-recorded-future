@@ -276,7 +276,7 @@ def base_payload():
                                        "s. Recently viewed by many analysts in"
                                        " many organizations in the Recorded Fu"
                                        "ture community.",
-                        "id": "transient:indicator-2aa378a5-777f-4280-939a-43afe8256bf2",
+                        "id": "transient:indicator-883b44a8-b131-41aa-a7d6-005b1f1adb8d",
                         "producer": "Recorded Future",
                         "schema_version": "1.1.6",
                         "severity": 'Low',
@@ -305,7 +305,7 @@ def base_payload():
                         "confidence": "High",
                         "disposition": 1,
                         "disposition_name": "Common",
-                        "id": "transient:judgement-ca332260-0585-4e36-a2dd-5f3483d67226",
+                        "id": "transient:judgement-55282619-04f6-4167-af33-593684f86a39",
                         "observable": {
                             "type": "domain",
                             "value": "cisco.com"
@@ -329,7 +329,7 @@ def base_payload():
                         "confidence": "High",
                         "disposition": 1,
                         "disposition_name": "Common",
-                        "id": "transient:judgement-794cd761-69af-45dd-b3ea-21aa16dda637",
+                        "id": "transient:judgement-223cc16f-93b6-4cec-92d4-90affec03ed4",
                         "observable": {
                             "type": "domain",
                             "value": "cisco.com"
@@ -355,7 +355,7 @@ def base_payload():
                 "count": 4,
                 "docs": [
                     {
-                        "id": "transient:relationship-3a16f9a4-46ad-4054-91ca-fe7bac9d11bf",
+                        "id": "transient:relationship-ca332260-0585-4e36-a2dd-5f3483d67226",
                         "relationship_type": "member-of",
                         "schema_version": "1.1.6",
                         "source_ref": "transient:sighting-0b466174-d338-47e9-9184-c366de00f822",
@@ -364,27 +364,27 @@ def base_payload():
                         "type": "relationship"
                     },
                     {
-                        "id": "transient:relationship-883b44a8-b131-41aa-a7d6-005b1f1adb8d",
+                        "id": "transient:relationship-3a16f9a4-46ad-4054-91ca-fe7bac9d11bf",
                         "relationship_type": "element-of",
                         "schema_version": "1.1.6",
-                        "source_ref": "transient:judgement-ca332260-0585-4e36-a2dd-5f3483d67226",
+                        "source_ref": "transient:judgement-55282619-04f6-4167-af33-593684f86a39",
                         "target_ref": "transient:indicator-d89fb782-76d0-41aa-b373-99eeb9ab3cb7",
                         "type": "relationship"
                     },
                     {
-                        "id": "transient:relationship-a93e5ea5-3125-4f27-a5a6-108522227306",
+                        "id": "transient:relationship-4316e8d5-495e-4197-8bd8-af40145475da",
                         "relationship_type": "member-of",
                         "schema_version": "1.1.6",
-                        "source_ref": "transient:sighting-223cc16f-93b6-4cec-92d4-90affec03ed4",
-                        "target_ref": "transient:indicator-2aa378a5-777f-4280-939a-43afe8256bf2",
+                        "source_ref": "transient:sighting-2aa378a5-777f-4280-939a-43afe8256bf2",
+                        "target_ref": "transient:indicator-883b44a8-b131-41aa-a7d6-005b1f1adb8d",
                         "type": "relationship"
                     },
                     {
-                        "id": "transient:relationship-7799155c-1b74-45b8-8d6c-33e65950bb49",
+                        "id": "transient:relationship-794cd761-69af-45dd-b3ea-21aa16dda637",
                         "relationship_type": "element-of",
                         "schema_version": "1.1.6",
-                        "source_ref": "transient:judgement-794cd761-69af-45dd-b3ea-21aa16dda637",
-                        "target_ref": "transient:indicator-2aa378a5-777f-4280-939a-43afe8256bf2",
+                        "source_ref": "transient:judgement-223cc16f-93b6-4cec-92d4-90affec03ed4",
+                        "target_ref": "transient:indicator-883b44a8-b131-41aa-a7d6-005b1f1adb8d",
                         "type": "relationship"
                     }
                 ]
@@ -395,7 +395,7 @@ def base_payload():
                     {
                         'disposition': 1,
                         'disposition_name': 'Common',
-                        'judgement_id': 'transient:judgement-ca332260-0585-4e36-a2dd-5f3483d67226',
+                        'judgement_id': 'transient:judgement-55282619-04f6-4167-af33-593684f86a39',
                         'observable': {'type': 'domain',
                                        'value': 'cisco.com'},
                         'type': 'verdict',
@@ -409,7 +409,7 @@ def base_payload():
                 ]
             },
             "sightings": {
-                'count': 4,
+                'count': 7,
                 'docs': [
                     {
                         'confidence': 'High', 'count': 1,
@@ -440,29 +440,6 @@ def base_payload():
                         'type': 'sighting'
                     },
                     {
-                        "confidence": "High",
-                        "count": 1,
-                        "description": "Seen by Fast Company",
-                        "id": "transient:sighting-55282619-04f6-4167-af33-593684f86a39",
-                        "internal": False,
-                        "observables": [
-                            {
-                                "type": "domain",
-                                "value": "cisco.com"
-                            }
-                        ],
-                        "observed_time": {
-                            "start_time": "2009-05-26T13:00:23.000Z"
-                        },
-                        "schema_version": "1.1.6",
-                        "short_description": "Seen by Fast Company",
-                        "source": "Fast Company",
-                        "source_uri": "http://feedproxy.google.com/~r/fastcompany/headlines/~3/2lG8pHrMDbA/1279087",
-                        "timestamp": f"{datetime.utcnow().isoformat(timespec='seconds')}Z",
-                        "title": "How Big Business Weathers the Economic Storm",
-                        "type": "sighting"
-                    },
-                    {
                         'confidence': 'High',
                         'count': 1,
                         'description': '1 sighting on 1 source: Recorded '
@@ -471,7 +448,7 @@ def base_payload():
                                        'by many analysts in many '
                                        'organizations in the Recorded Future '
                                        'community.',
-                        'id': 'transient:sighting-223cc16f-93b6-4cec-92d4-90affec03ed4',
+                        'id': 'transient:sighting-2aa378a5-777f-4280-939a-43afe8256bf2',
                         'internal': False,
                         'observables': [{'type': 'domain',
                                          'value': 'cisco.com'}],
@@ -492,11 +469,57 @@ def base_payload():
                                  'Community',
                         'type': 'sighting'
                     },
+                    {'confidence': 'High',
+                     'count': 1,
+                     'description': 'Seen by Fast Company',
+                     'id': 'transient:sighting-a93e5ea5-3125-4f27-a5a6-108522227306',
+                     'internal': False,
+                     'observables': [{'type': 'domain',
+                                      'value': 'cisco.com'}],
+                     'observed_time': {'start_time': '2009-05-26T13:00:23.000Z'},
+                     'schema_version': '1.1.6',
+                     'short_description': 'Seen by Fast Company',
+                     'source': 'Fast Company',
+                     'source_uri': 'http://feedproxy.google.com/~r/fastcompany/headlines/~3/2lG8pHrMDbA/1279087',
+                     'timestamp': f"{datetime.utcnow().isoformat(timespec='seconds')}Z",
+                     'title': 'How Big Business Weathers the '
+                              'Economic Storm',
+                     'type': 'sighting'},
+                    {'confidence': 'High',
+                     'count': 1,
+                     'description': 'Seen by GitHub',
+                     'id': 'transient:sighting-7799155c-1b74-45b8-8d6c-33e65950bb49',
+                     'internal': False,
+                     'observables': [{'type': 'domain',
+                                      'value': 'cisco.com'}],
+                     'observed_time': {'start_time': '2021-06-21T07:04:30.000Z'},
+                     'schema_version': '1.1.6',
+                     'short_description': 'Seen by GitHub',
+                     'source': 'GitHub',
+                     'source_uri': 'https://github.com/TheXPerienceProject/android_kernel_xiaomi_vayu/blob/master/Documentation/translations/zh_CN/HOWTO',
+                     'timestamp': f"{datetime.utcnow().isoformat(timespec='seconds')}Z",
+                     'title': 'HOWTO',
+                     'type': 'sighting'},
+                    {'confidence': 'High',
+                     'count': 1,
+                     'description': 'Seen by Russian Market',
+                     'id': 'transient:sighting-06e2b6ef-8669-4ce6-a56c-0cae335d2ea3',
+                     'internal': False,
+                     'observables': [{'type': 'domain',
+                                      'value': 'cisco.com'}],
+                     'observed_time': {'start_time': '2021-06-16T21:55:56.166Z'},
+                     'schema_version': '1.1.6',
+                     'short_description': 'Seen by Russian Market',
+                     'source': 'Russian Market',
+                     'source_uri': 'http://Russian%20Market%20(Obfuscated)/logs?stealer=&system=&country=&state=&city=&zip=&page=235&perpage=50&isp=&outlook=&links=&withcookies=0&pricesort=&pricerange=0;10&vendor=#ebad6be806b2d911351bc34793d9ae7e',
+                     'timestamp': f"{datetime.utcnow().isoformat(timespec='seconds')}Z",
+                     'title': 'Russian Market',
+                     'type': 'sighting'},
                     {
                         "confidence": "High",
                         "count": 1,
                         "description": "Seen by GitHub",
-                        "id": "transient:sighting-4316e8d5-495e-4197-8bd8-af40145475da",
+                        "id": "transient:sighting-c0998a65-a8aa-44ba-91ce-2136790f158b",
                         "internal": False,
                         "observables": [
                             {
@@ -514,7 +537,22 @@ def base_payload():
                         "timestamp": f"{datetime.utcnow().isoformat(timespec='seconds')}Z",
                         "title": "HOWTO",
                         "type": "sighting"
-                    }
+                    },
+                    {'confidence': 'High',
+                     'count': 1,
+                     'description': 'Seen by PasteBin',
+                     'id': 'transient:sighting-a25243ee-2dd4-4e20-9789-9ba4faaa10a3',
+                     'internal': False,
+                     'observables': [{'type': 'domain',
+                                      'value': 'cisco.com'}],
+                     'observed_time': {'start_time': '2021-06-16T10:07:26.000Z'},
+                     'schema_version': '1.1.6',
+                     'short_description': 'Seen by PasteBin',
+                     'source': 'PasteBin',
+                     'source_uri': 'https://pastebin.com/s9dGSuMH',
+                     'timestamp': f"{datetime.utcnow().isoformat(timespec='seconds')}Z",
+                     'title': 'Untitled Paste from Pastebin',
+                     'type': 'sighting'}
                 ]
             }
         }
