@@ -32,6 +32,9 @@ def ids():
     yield '794cd761-69af-45dd-b3ea-21aa16dda637'
     yield 'a93e5ea5-3125-4f27-a5a6-108522227306'
     yield '7799155c-1b74-45b8-8d6c-33e65950bb49'
+    yield '06e2b6ef-8669-4ce6-a56c-0cae335d2ea3'
+    yield 'c0998a65-a8aa-44ba-91ce-2136790f158b'
+    yield 'a25243ee-2dd4-4e20-9789-9ba4faaa10a3'
 
 
 @fixture(scope='module', params=routes(), ids=lambda route: f'POST {route}')

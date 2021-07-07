@@ -53,27 +53,24 @@ def observe_observables():
 
         judgements_for_observable = []
 
+        limit = current_app.config['CTR_ENTITIES_LIMIT']
+
         if rules:
             rules.sort(
                 key=lambda elem: elem['criticality'],
                 reverse=True
             )
-            rules = rules[:current_app.config['CTR_ENTITIES_LIMIT']]
-            for idx, rule in enumerate(rules):
-                indicator = mapping.indicator.extract(idx)
+            rules = rules[:limit]
+            for rule in rules:
+                indicator = mapping.indicator.extract(rule)
                 g.indicators.append(indicator)
 
                 sighting_of_indicator = \
-                    mapping.sighting_of_indicator.extract(idx)
+                    mapping.sighting_of_indicator.extract(rule)
                 g.sightings.append(sighting_of_indicator) \
                     if sighting_of_indicator else None
 
-                sighting_of_observable = \
-                    mapping.sighting_of_observable.extract(idx)
-                g.sightings.append(sighting_of_observable) \
-                    if sighting_of_observable else None
-
-                judgement = mapping.judgement.extract(idx)
+                judgement = mapping.judgement.extract(rule)
                 judgements_for_observable.append(judgement)
 
                 g.relationships.append(
@@ -88,6 +85,13 @@ def observe_observables():
                         'element-of'
                     )
                 )
+            sightings = result['data']['sightings'][:limit]
+            for sighting in sightings:
+                if len(g.sightings) < limit:
+                    sighting_of_observable = \
+                        mapping.sighting_of_observable.extract(sighting)
+                    g.sightings.append(sighting_of_observable) \
+                        if sighting_of_observable else None
 
         if judgements_for_observable:
             g.judgements.extend(judgements_for_observable)
