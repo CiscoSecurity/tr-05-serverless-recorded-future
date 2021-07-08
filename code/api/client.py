@@ -14,7 +14,8 @@ class RecordedFutureClient(ConnectApiClient):
     def __init__(self, api_key):
         self.fields = current_app.config['SEARCH_FIELDS']
         super().__init__(api_key)
-        self._request_session.headers['user-agent'] = current_app.config['USER_AGENT']
+        self._request_session.headers['user-agent'] = \
+            current_app.config['USER_AGENT']
 
     def _request(self, lookup, observable):
         value = observable['value']
