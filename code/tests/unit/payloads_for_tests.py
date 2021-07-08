@@ -304,7 +304,7 @@ def base_payload():
                     {
                         "confidence": "High",
                         "disposition": 1,
-                        "disposition_name": "Common",
+                        "disposition_name": "Unknown",
                         "id": "transient:judgement-55282619-04f6-4167-af33-593684f86a39",
                         "observable": {
                             "type": "domain",
@@ -328,7 +328,7 @@ def base_payload():
                     {
                         "confidence": "High",
                         "disposition": 1,
-                        "disposition_name": "Common",
+                        "disposition_name": "Unknown",
                         "id": "transient:judgement-223cc16f-93b6-4cec-92d4-90affec03ed4",
                         "observable": {
                             "type": "domain",
@@ -394,7 +394,7 @@ def base_payload():
                 'docs': [
                     {
                         'disposition': 1,
-                        'disposition_name': 'Common',
+                        'disposition_name': 'Unknown',
                         'judgement_id': 'transient:judgement-55282619-04f6-4167-af33-593684f86a39',
                         'observable': {'type': 'domain',
                                        'value': 'cisco.com'},
@@ -567,7 +567,7 @@ def deliberate_payload():
                 "docs": [
                     {
                         "disposition": 1,
-                        "disposition_name": "Common",
+                        "disposition_name": "Unknown",
                         "observable": {
                             "type": "domain",
                             "value": "cisco.com"
