@@ -48,6 +48,8 @@ def observe_observables():
 
     for observable in observables:
         result = client.make_observe(observable)
+        if not result:
+            continue
         rules = result['data']['risk'].get('evidenceDetails')
         mapping = Mapping(observable, result)
 
