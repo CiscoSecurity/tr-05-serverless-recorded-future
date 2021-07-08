@@ -29,9 +29,9 @@ SIGHTING_OF_INDICATOR = f'{SIGHTING}_of_{INDICATOR}'
 SIGHTING_OF_OBSERVABLE = f'{SIGHTING}_of_observable'
 
 SIGHTING_SEVERITY = RangeDict({
-    range(65, 100): "High",
-    range(25, 65): "Medium",
-    range(1, 25): "Low",
+    range(3, 5): "High",
+    range(2, 3): "Medium",
+    range(1, 2): "Low",
     range(0, 1): None,
 })
 
@@ -52,8 +52,7 @@ JUDGEMENT_SEVERITY = RangeDict({
 DISPOSITION_NAME = RangeDict({
     range(3, 5): 'Malicious',
     range(2, 3): 'Suspicious',
-    range(1, 2): 'Common',
-    range(0, 1): 'Unknown',
+    range(0, 2): 'Unknown',
 })
 
 ENTITY_RELEVANCE_PERIOD = timedelta(days=30)
@@ -132,7 +131,7 @@ class Mapping:
                 ],
             SIGHTING_OF_INDICATOR:
                 lambda: SIGHTING_SEVERITY[
-                    int(self.lookup['data']['risk']['score'])
+                    int(entity['criticality'])
                 ],
             JUDGEMENT:
                 lambda: JUDGEMENT_SEVERITY[
