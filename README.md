@@ -131,6 +131,6 @@ Each response from the Recorded Future API for the supported observables generat
 - `Judgement`, `Indicator`, `Verdict`, `Sighting` of `Indicator` are based on `.rules[]`.
 - `Sighting` of `Observable` is taken from `.sightings[]`.
  
-Relationships are next: 
+Relationships are the following: 
 - `Judgement` -> element-of `Indicator`
 - `Sighting` -> member-of `Indicator` (for Sighting of an Indicator)
