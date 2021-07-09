@@ -105,7 +105,7 @@ class Mapping:
             JUDGEMENT:
                 lambda: source,
             SIGHTING_OF_OBSERVABLE:
-                lambda: entity['source']
+                lambda: 'Recorded Future Recent Reference'
         }
         return sources[self.name]()
 
@@ -118,7 +118,7 @@ class Mapping:
             JUDGEMENT:
                 lambda: self.lookup['data'].get('intelCard'),
             SIGHTING_OF_OBSERVABLE:
-                lambda: entity.get('url')
+                lambda: self.lookup['data'].get('intelCard')
         }
 
         return uri[self.name]()
