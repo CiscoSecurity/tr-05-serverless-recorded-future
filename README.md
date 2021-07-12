@@ -117,3 +117,20 @@ This application was developed and tested under Python version 3.9.
 - `md5`
 - `domain`
 - `url`
+
+### CTIM Mapping Specifics
+
+Each response from the Recorded Future API for the supported observables generates the following CTIM entities:
+- `Judgement`
+- `Indicator`
+- `Sighting` of `Indicator`
+- `Sighting` of `Observable`
+- `Relationship`
+- `Verdict` 
+  
+- `Judgement`, `Indicator`, `Verdict`, `Sighting` of `Indicator` are based on `.rules[]`.
+- `Sighting` of `Observable` is taken from `.sightings[]`.
+ 
+Relationships are the following: 
+- `Judgement` -> element-of `Indicator`
+- `Sighting` -> member-of `Indicator` (for Sighting of an Indicator)
