@@ -7,10 +7,6 @@ ENV NON_ROOT ciscosec
 RUN addgroup --system $NON_ROOT && \
     adduser -S -G $NON_ROOT $NON_ROOT
 
-# copy required project files
-COPY code /app
-COPY scripts /app
-
 # install required packages
 RUN apk update && apk add --no-cache \
     musl-dev \
@@ -28,6 +24,10 @@ RUN apk update && apk add --no-cache \
     py3-pip \
     python3-dev \
     && rm -rf /var/lib/apt/lists/*
+
+# copy required project files
+COPY code /app
+COPY scripts /
 
 # do the Python dependencies
 RUN pip3 install -r /app/requirements.txt
