@@ -30,7 +30,10 @@ COPY code /app
 COPY scripts /
 
 # do the Python dependencies
-RUN pip3 install -r /app/requirements.txt
+RUN set -ex && pip install --upgrade pipenv && \
+    PIP_USER=1 PIP_IGNORE_INSTALLED=1 \
+    PIPENV_VENV_IN_PROJECT="enabled" \
+    pipenv install -r app/requirements.txt
 
 # add required permissions to non-root user
 RUN mv /uwsgi.ini /etc/uwsgi && \
