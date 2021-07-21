@@ -4,6 +4,7 @@ LABEL maintainer="Ian Redden <iaredden@cisco.com>"
 ENV NON_ROOT ciscosec
 ENV PIPENV_PIPFILE app/Pipfile
 ENV PIPENV_SYSTEM 1
+ENV PIP_IGNORE_INSTALLED 1
 
 # create non-root user
 RUN addgroup --system $NON_ROOT && \
