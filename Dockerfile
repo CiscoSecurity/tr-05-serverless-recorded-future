@@ -2,7 +2,6 @@ FROM alpine:3.14
 LABEL maintainer="Ian Redden <iaredden@cisco.com>"
 
 ENV NON_ROOT ciscosec
-ENV PIP_IGNORE_INSTALLED 1
 ENV PIPENV_PIPFILE app/Pipfile
 ENV PIPENV_SYSTEM 1
 
@@ -33,7 +32,7 @@ COPY code /app
 COPY scripts /
 
 # do the Python dependencies
-RUN set -ex && pip install --upgrade pipenv && \
+RUN set -ex && pip install --no-cache-dir --upgrade pipenv && \
     pipenv install --deploy
 
 # add required permissions to non-root user
