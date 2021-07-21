@@ -2,6 +2,9 @@ FROM alpine:3.14
 LABEL maintainer="Ian Redden <iaredden@cisco.com>"
 
 ENV NON_ROOT ciscosec
+ENV PIP_IGNORE_INSTALLED 1
+ENV PIPENV_PIPFILE app/Pipfile
+ENV PIPENV_SYSTEM 1
 
 # create non-root user
 RUN addgroup --system $NON_ROOT && \
@@ -31,9 +34,7 @@ COPY scripts /
 
 # do the Python dependencies
 RUN set -ex && pip install --upgrade pipenv && \
-    PIP_USER=1 PIP_IGNORE_INSTALLED=1 \
-    PIPENV_VENV_IN_PROJECT="enabled" \
-    pipenv install -r app/requirements.txt
+    pipenv install --deploy
 
 # add required permissions to non-root user
 RUN mv /uwsgi.ini /etc/uwsgi && \
