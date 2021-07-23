@@ -54,7 +54,8 @@ RUN apk update && apk add --no-cache \
     uwsgi-syslog \
     supervisor \
     syslog-ng \
-    git
+    git \
+    py3-pip
 
 # add required permissions to non-root user
 RUN mv /uwsgi.ini /etc/uwsgi && \
