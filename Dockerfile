@@ -30,8 +30,9 @@ RUN set -ex && pip install --no-cache-dir --upgrade pipenv && \
 
 # move "requests" dependency and it's subdependencies to the pyroot directory
 RUN mv "$(pip show requests | grep Location: | cut -d " " -f2)"/requests \
-    "$(pip show chardet | grep Location: | cut -d " " -f2)"/chardet \
-    "$(pip show certifi | grep Location: | cut -d " " -f2)"/certifi -fin "$(python3 -m site --user-site)"
+       "$(pip show chardet | grep Location: | cut -d " " -f2)"/chardet   \
+       "$(pip show certifi | grep Location: | cut -d " " -f2)"/certifi   \
+    -fin "$(python3 -m site --user-site)"
 
 FROM alpine:3.14
 
