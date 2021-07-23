@@ -52,7 +52,7 @@ JUDGEMENT_SEVERITY = RangeDict({
 DISPOSITION_NAME = RangeDict({
     range(3, 5): 'Malicious',
     range(2, 3): 'Suspicious',
-    range(0, 2): 'Unknown',
+    range(1, 2): 'Unknown',
 })
 
 ENTITY_RELEVANCE_PERIOD = timedelta(days=30)

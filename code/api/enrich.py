@@ -27,7 +27,7 @@ def deliberate_observables():
         result = client.make_observe(observable)
         mapping = Mapping(observable, result)
 
-        if result:
+        if result['data']['risk']['evidenceDetails']:
             g.verdicts.append(mapping.verdict.extract())
 
     return jsonify_result()
