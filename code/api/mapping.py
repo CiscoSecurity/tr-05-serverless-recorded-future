@@ -55,6 +55,12 @@ DISPOSITION_NAME = RangeDict({
     range(0, 2): 'Unknown',
 })
 
+DISPOSITION = RangeDict({
+    range(3, 5): 2,
+    range(2, 3): 3,
+    range(0, 2): 5,
+})
+
 ENTITY_RELEVANCE_PERIOD = timedelta(days=30)
 
 
@@ -293,7 +299,7 @@ class Mapping:
             criticality = entity['criticality']
             return {
                 'id': transient_id(JUDGEMENT),
-                'disposition': criticality,
+                'disposition': DISPOSITION[criticality],
                 'disposition_name': DISPOSITION_NAME[criticality],
                 'type': JUDGEMENT,
                 'observable': self.root.observables(),
@@ -315,7 +321,7 @@ class Mapping:
         def extract(self):
             disposition = self.root.lookup['data']['risk']['criticality']
             return {
-                'disposition': disposition,
+                'disposition': DISPOSITION[disposition],
                 'disposition_name': DISPOSITION_NAME[disposition],
                 'type': VERDICT,
                 'observable': self.root.observables(),
