@@ -10,7 +10,7 @@ ENV PATH=$PYROOT/bin:$PATH \
 
 WORKDIR /app
 
-# install required packages
+# install required packages to build app
 RUN apk update && apk add --no-cache \
     musl-dev \
     openssl-dev \
@@ -52,6 +52,7 @@ COPY --from=builder --chown=$NON_ROOT:$NON_ROOT $PYROOT/bin/ $PYROOT/bin/
 COPY --from=builder --chown=$NON_ROOT:$NON_ROOT /app/code /app
 COPY --from=builder --chown=$NON_ROOT:$NON_ROOT /app/scripts /
 
+# install required packages to run app
 RUN apk update && apk add --no-cache \
     uwsgi-python3 \
     uwsgi-http \
