@@ -17,8 +17,7 @@ RUN apk update && apk add --no-cache \
     gcc \
     libffi-dev \
     py3-pip \
-    python3-dev \
-    && rm -rf /var/lib/apt/lists/*
+    python3-dev
 
 # copy required project files
 COPY code ./code
@@ -28,6 +27,11 @@ COPY scripts ./scripts
 RUN set -ex && pip install --no-cache-dir --upgrade pipenv && \
     PIP_USER=1 \
     pipenv install --deploy
+
+# move "requests" dependency and it's subdependencies to the pyroot directory
+RUN mv "$(pip show requests | grep Location: | cut -d " " -f2)"/requests $PYROOT/lib/python3.9/site-packages && \
+    mv "$(pip show chardet | grep Location: | cut -d " " -f2)"/chardet $PYROOT/lib/python3.9/site-packages && \
+    mv "$(pip show certifi | grep Location: | cut -d " " -f2)"/certifi $PYROOT/lib/python3.9/site-packages
 
 FROM alpine:3.14
 
@@ -54,8 +58,7 @@ RUN apk update && apk add --no-cache \
     uwsgi-syslog \
     supervisor \
     syslog-ng \
-    git \
-    py3-pip
+    git
 
 # add required permissions to non-root user
 RUN mv /uwsgi.ini /etc/uwsgi && \
