@@ -1,11 +1,10 @@
 FROM alpine:3.14 AS builder
 LABEL maintainer="Ian Redden <iaredden@cisco.com>"
 
-ENV NON_ROOT ciscosec
-ENV PIPENV_PIPFILE code/Pipfile
-ENV PIPENV_SYSTEM 1
 ENV PYROOT /pyroot
+ENV PIPENV_SYSTEM 1
 ENV PIP_IGNORE_INSTALLED 1
+ENV PIPENV_PIPFILE code/Pipfile
 ENV PATH=$PYROOT/bin:$PATH \
     PYTHONUSERBASE=$PYROOT
 
@@ -55,8 +54,7 @@ RUN apk update && apk add --no-cache \
     uwsgi-syslog \
     supervisor \
     syslog-ng \
-    git \
-    py3-pip
+    git
 
 # add required permissions to non-root user
 RUN mv /uwsgi.ini /etc/uwsgi && \
