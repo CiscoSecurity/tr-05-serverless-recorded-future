@@ -1,12 +1,7 @@
 FROM alpine:3.14 AS builder
-LABEL maintainer="Ian Redden <iaredden@cisco.com>"
 
-ENV PYROOT /pyroot
-ENV PIPENV_SYSTEM 1
 ENV PIP_IGNORE_INSTALLED 1
-ENV PIPENV_PIPFILE code/Pipfile
-ENV PATH=$PYROOT/bin:$PATH \
-    PYTHONUSERBASE=$PYROOT
+ENV PIPENV_VENV_IN_PROJECT 1
 
 WORKDIR /app
 
@@ -20,19 +15,11 @@ RUN apk update && apk add --no-cache \
     python3-dev
 
 # copy required project files
-COPY code ./code
-COPY scripts ./scripts
+COPY code/Pipfile code/Pipfile.lock ./
 
 # do the Python dependencies
 RUN set -ex && pip install --no-cache-dir --upgrade pipenv && \
-    PIP_USER=1 \
     pipenv install --deploy
-
-# move "requests" dependency and it's subdependencies to the pyroot directory
-RUN mv "$(pip show requests | grep Location: | cut -d " " -f2)"/requests \
-       "$(pip show chardet | grep Location: | cut -d " " -f2)"/chardet   \
-       "$(pip show certifi | grep Location: | cut -d " " -f2)"/certifi   \
-    -fin "$(python3 -m site --user-site)"
 
 FROM alpine:3.14
 
@@ -48,10 +35,11 @@ RUN addgroup --system $NON_ROOT && \
     -h $PYROOT \
     -G $NON_ROOT $NON_ROOT
 
-COPY --from=builder --chown=$NON_ROOT:$NON_ROOT $PYROOT/lib/ $PYROOT/lib/
-COPY --from=builder --chown=$NON_ROOT:$NON_ROOT $PYROOT/bin/ $PYROOT/bin/
-COPY --from=builder --chown=$NON_ROOT:$NON_ROOT /app/code /app
-COPY --from=builder --chown=$NON_ROOT:$NON_ROOT /app/scripts /
+COPY --from=builder --chown=$NON_ROOT:$NON_ROOT /app/.venv/lib/ $PYROOT/lib/
+COPY --from=builder --chown=$NON_ROOT:$NON_ROOT /app/.venv/bin/ $PYROOT/bin/
+
+COPY code /app
+COPY scripts /
 
 # install required packages to run app
 RUN apk update && apk add --no-cache \
