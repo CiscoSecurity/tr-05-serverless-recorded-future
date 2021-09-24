@@ -43,19 +43,13 @@
       "id": "refer",
       "description": "Reference links"
     },
-    {
-      "id": "respond",
-      "description": "Response actions"
-    }
   ],
   "properties": {
     "supported-apis": [
       "health",
       "observe/observables",
       "deliberate/observables",
-      "refer/observables",
-      "respond/observables",
-      "respond/trigger"
+      "refer/observables"
     ],
     "auth-type": "configuration-token",
     "configuration-token-alg": "RS256",
