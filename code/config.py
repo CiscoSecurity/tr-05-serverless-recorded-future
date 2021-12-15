@@ -14,8 +14,9 @@ class Config:
                      'timestamps')
 
     USER_AGENT = (
-        'SecureX Threat Response Integrations '
-        '<tr-integrations-support@cisco.com>')
+        'securex_threat_response_recorded_future_integration'
+        f'/{VERSION}'
+    )
 
     CTR_DEFAULT_ENTITIES_LIMIT = 100
 
