@@ -32,21 +32,21 @@ SIGHTING_SEVERITY = RangeDict({
     range(3, 5): "High",
     range(2, 3): "Medium",
     range(1, 2): "Low",
-    range(0, 1): None,
+    range(0, 1): "None",
 })
 
 INDICATOR_SEVERITY = RangeDict({
     range(3, 5): "High",
     range(2, 3): "Medium",
     range(1, 2): "Low",
-    range(0, 1): None,
+    range(0, 1): "None",
 })
 
 JUDGEMENT_SEVERITY = RangeDict({
     range(3, 5): 'High',
     range(2, 3): 'Medium',
     range(1, 2): 'Low',
-    range(0, 1): None,
+    range(0, 1): 'None',
 })
 
 DISPOSITION_NAME = RangeDict({
